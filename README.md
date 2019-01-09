@@ -102,6 +102,7 @@ References
 ----------
 
 - [Nagios Documentation](https://assets.nagios.com/downloads/nagioscore/docs/)
+- [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
 
 License
 -------
