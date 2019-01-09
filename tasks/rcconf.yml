@@ -1,0 +1,31 @@
+---
+
+- name: "rcconf: Enable and start nagios."
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^nagios_enable"
+    line: "nagios_enable=\"YES\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  notify: enable and start nagios
+  when: bsd_nagios_enable
+
+- name: "rcconf: Disable and stop nagios."
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^nagios_enable"
+    line: "nagios_enable=\"NO\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  notify: disable and stop nagios
+  when: not bsd_nagios_enable
+
+- name: "rcconf: Configure nagios in /etc/rc.conf"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}=\"{{ item.val }}\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_rcconf }}"
+  notify: reload nagios
+
+# EOF
+...

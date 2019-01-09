@@ -1,0 +1,45 @@
+---
+# defaults vbotka.freebsd-nagios
+
+bsd_nagios_enable: false
+bsd_nagios_debug: false
+bsd_nagios_backup_conf: "no"
+
+freebsd_install_method: "packages"
+# freebsd_install_method: "ports"
+freebsd_use_packages: "yes"
+freebsd_install_retries: 10
+freebsd_install_delay: 5
+
+bsd_nagios_packages:
+  - "net-mgmt/nagios4"
+
+# rc.conf
+bsd_nagios_service: "nagios"
+bsd_nagios_rcconf: []
+#  - { key: "nagios_enable", val: "{{ bsd_nagios_enable }}"}
+
+# nagios
+bsd_nagios_conf_recreate: false
+bsd_nagios_conf_owner: root
+bsd_nagios_conf_group: nagios
+bsd_nagios_conf_path: "/usr/local/etc/nagios"
+bsd_nagios_conf_files:
+  - "{{ bsd_nagios_conf_path }}/cgi.cfg"
+  - "{{ bsd_nagios_conf_path }}/nagios.cfg"
+  - "{{ bsd_nagios_conf_path }}/resource.cfg"
+  - "{{ bsd_nagios_conf_objects }}/commands.cfg"
+  - "{{ bsd_nagios_conf_objects }}/contacts.cfg"
+  - "{{ bsd_nagios_conf_objects }}/localhost.cfg"
+  - "{{ bsd_nagios_conf_objects }}/printer.cfg"
+  - "{{ bsd_nagios_conf_objects }}/switch.cfg"
+  - "{{ bsd_nagios_conf_objects }}/templates.cfg"
+  - "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
+  - "{{ bsd_nagios_conf_objects }}/windows.cfg"
+
+bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
+bsd_nagios_conf_options: []
+#  - { key: "log_file", val: "log_file=/var/spool/nagios/nagios.log" }
+
+# EOF
+...

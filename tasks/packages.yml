@@ -1,0 +1,24 @@
+---
+
+- name: "package: Install Nagios packages."
+  pkgng:
+    name: "{{ bsd_nagios_packages }}"
+  register: result
+  retries: "{{ freebsd_install_retries }}"
+  until: result is succeeded
+  delay: "{{ freebsd_install_delay }}"
+  when: freebsd_install_method == "packages"
+
+- name: "packages: Install Nagios ports."
+  portinstall:
+    name: "{{ item }}"
+    use_packages: "{{ freebsd_use_packages }}"
+  loop: "{{ bsd_nagios_packages }}"
+  register: result
+  retries: "{{ freebsd_install_retries }}"
+  until: result is succeeded
+  delay: "{{ freebsd_install_delay }}"
+  when: freebsd_install_method == "ports"
+
+# EOF
+...
