@@ -96,6 +96,10 @@ apache_directory_blocks:
 apache_alias:
   - "ScriptAlias /nagios/cgi-bin/ /usr/local/www/nagios/cgi-bin/"
   - "Alias /nagios/ /usr/local/www/nagios/"
+
+apache_httpd_conf_modules:
+  - { module: "cgi_module", mod: "mod_cgi.so", present: true }
+  - { module: "cgid_module", mod: "mod_cgid.so", present: true }
 ```
 
 References
