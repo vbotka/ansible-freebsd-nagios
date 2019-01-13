@@ -15,5 +15,7 @@ galaxy_info:
     - freebsd
     - monitoring
     - nagios
+    - nsca
+    - nrpe
 dependencies: []
 ...

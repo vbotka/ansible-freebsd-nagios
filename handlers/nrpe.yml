@@ -1,0 +1,39 @@
+---
+# nrpe handlers freebsd_nagios
+
+- name: enable and start nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: started
+    enabled: "yes"
+
+- name: disable and stop nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: stopped
+    enabled: "no"
+
+- name: start nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: started
+
+- name: stop nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: stopped
+
+- name: restart nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: restarted
+  when: bsd_nrpe_enable
+
+- name: reload nrpe
+  service:
+    name: "{{ bsd_nrpe_service }}"
+    state: reloaded
+  when: bsd_nrpe_enable
+
+# EOF
+...

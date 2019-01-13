@@ -1,17 +1,17 @@
 ---
 
-- name: "nagios-create-conf: Stat {{ item }}"
+- name: "conf-create: Stat {{ item }}"
   stat:
     path: "{{ item }}"
   register: conf_file
 
-- name: "nagios-create-conf: Create {{ item }}"
-  command: "cp {{ item }}-sample {{ item }}"
+- name: "conf-create: Create {{ item }}"
+  command: "cp {{ item }}{{ bsd_nagios_conf_sample }} {{ item }}"
   args:
     creates: "{{ item }}"
   when: not conf_file.stat.exists
 
-- name: "nagios-create-conf: Chown {{ item }}"
+- name: "conf-create: Chown {{ item }}"
   file:
     path: "{{ item }}"
     owner: "{{ bsd_nagios_conf_owner }}"

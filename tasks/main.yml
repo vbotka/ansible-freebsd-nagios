@@ -1,5 +1,5 @@
 ---
-# tasks vbotka.freebsd-nagios
+# tasks freebsd_nagios
 
 - import_tasks: debug.yml
   when: bsd_nagios_debug
@@ -8,8 +8,8 @@
 - import_tasks: packages.yml
   tags: bsd_nagios_packages
 
-- import_tasks: nagios.yml
-  tags: bsd_nagios_nagios
+- import_tasks: conf.yml
+  tags: bsd_nagios_conf
 
 - import_tasks: rcconf.yml
   tags: bsd_nagios_rcconf

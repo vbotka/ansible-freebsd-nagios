@@ -1,7 +1,9 @@
 ---
-# defaults vbotka.freebsd-nagios
+# defaults freebsd_nagios
 
 bsd_nagios_enable: false
+bsd_nsca_enable: false
+bsd_nrpe_enable: false
 bsd_nagios_debug: false
 bsd_nagios_backup_conf: "no"
 
@@ -13,17 +15,27 @@ freebsd_install_delay: 5
 
 bsd_nagios_packages:
   - "net-mgmt/nagios4"
+  - "net-mgmt/nagios-plugins"
+  - "net-mgmt/nsca"
+  - "net-mgmt/nrpe3"
 
 # rc.conf
+bsd_nagios_program: "/usr/local/bin/nagios"
 bsd_nagios_service: "nagios"
 bsd_nagios_rcconf: []
-#  - { key: "nagios_enable", val: "{{ bsd_nagios_enable }}"}
+bsd_nsca_service: "nsca"
+bsd_nsca_rcconf: []
+bsd_nrpe_service: "nrpe3"
+bsd_nrpe_rcconf: []
+
+bsd_nagios_conf_owner: root
+bsd_nagios_conf_group: nagios
+bsd_nagios_conf_sample: "-sample"
 
 # nagios
 bsd_nagios_conf_recreate: false
-bsd_nagios_conf_owner: root
-bsd_nagios_conf_group: nagios
 bsd_nagios_conf_path: "/usr/local/etc/nagios"
+bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
 bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_path }}/cgi.cfg"
   - "{{ bsd_nagios_conf_path }}/nagios.cfg"
@@ -36,10 +48,40 @@ bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_objects }}/templates.cfg"
   - "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
   - "{{ bsd_nagios_conf_objects }}/windows.cfg"
+bsd_nagios_conf_options:
+  - file: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    conf:
+      - {key: "log_file", val: "/var/spool/nagios/nagios.log", present: true}
+bsd_nagios_cfg_files:
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/commands.cfg", present: true}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/contacts.cfg", present: true}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/localhost.cfg", present: true}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/templates.cfg", present: true}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/timeperiods.cfg", present: true}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/windows.cfg", present: false}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/switch.cfg", present: false}
+  - {cfg_file: "{{ bsd_nagios_conf_objects }}/printer.cfg", present: false}
+bsd_nagios_cfg_dirs: []
+bsd_nagios_objects: []
 
-bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
-bsd_nagios_conf_options: []
-#  - { key: "log_file", val: "log_file=/var/spool/nagios/nagios.log" }
+# nsca
+bsd_nsca_conf_recreate: false
+bsd_nsca_conf_files:
+  - "{{ bsd_nagios_conf_path }}/nsca.cfg"
+bsd_nsca_conf_options:
+  - file: "{{ bsd_nagios_conf_path }}/nsca.cfg"
+    conf:
+      - {key: "log_facility", val: "daemon", present: true}
+
+# nrpe
+bsd_nrpe_conf_recreate: false
+bsd_nrpe_conf_path: "/usr/local/etc"
+bsd_nrpe_conf_files:
+  - "{{ bsd_nrpe_conf_path }}/nrpe.cfg"
+bsd_nrpe_conf_options:
+  - file: "{{ bsd_nrpe_conf_path }}/nrpe.cfg"
+    conf:
+      - {key: "log_facility", val: "daemon", present: true}
 
 # EOF
 ...

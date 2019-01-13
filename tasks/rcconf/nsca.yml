@@ -1,0 +1,31 @@
+---
+
+- name: "rcconf-nsca: Enable and start {{ bsd_nsca_service }}"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^{{ bsd_nsca_service }}_enable"
+    line: "{{ bsd_nsca_service }}_enable=\"YES\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  notify: enable and start nsca
+  when: bsd_nsca_enable
+
+- name: "rcconf-nsca: Disable and stop {{ bsd_nsca_service }}"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^{{ bsd_nsca_service }}_enable"
+    line: "{{ bsd_nsca_service }}_enable=\"NO\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  notify: disable and stop nsca
+  when: not bsd_nsca_enable
+
+- name: "rcconf-nsca: Configure nsca in /etc/rc.conf"
+  lineinfile:
+    dest: /etc/rc.conf
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}=\"{{ item.val }}\""
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nsca_rcconf }}"
+  notify: reload nsca
+
+# EOF
+...

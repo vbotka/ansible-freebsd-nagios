@@ -27,7 +27,6 @@
          bsd_nagios_precache [ {{ bsd_nagios_precache|default('undefined') }} ]
          bsd_nagios_rcconf
          {{ bsd_nagios_rcconf | to_nice_yaml }}
-
          bsd_nagios_conf_recreate [ {{ bsd_nagios_conf_recreate }} ]
          bsd_nagios_conf_owner [ {{ bsd_nagios_conf_owner }} ]
          bsd_nagios_conf_group [ {{ bsd_nagios_conf_group }} ]
@@ -36,7 +35,33 @@
          bsd_nagios_conf_files
          {{ bsd_nagios_conf_files | to_nice_yaml }}
          bsd_nagios_conf_options
-         {{ bsd_nagios_conf_options | to_nice_yaml }}
+         {{ bsd_nagios_conf_options | to_yaml }}
+         bsd_nagios_cfg_files
+         {{ bsd_nagios_cfg_files | to_yaml }}
+         bsd_nagios_cfg_dirs
+         {{ bsd_nagios_cfg_dirs | to_yaml }}
+         bsd_nagios_objects
+         {{ bsd_nagios_objects | to_yaml }}
+
+         bsd_nsca_enable [ {{ bsd_nsca_enable }} ]
+         bsd_nsca_service [ {{ bsd_nsca_service }} ]
+         bsd_nsca_rcconf
+         {{ bsd_nsca_rcconf | to_nice_yaml }}
+         bsd_nsca_conf_recreate [ {{ bsd_nsca_conf_recreate }} ]
+         bsd_nsca_conf_files
+         {{ bsd_nsca_conf_files | to_nice_yaml }}
+         bsd_nsca_conf_options
+         {{ bsd_nsca_conf_options | to_yaml }}
+
+         bsd_nrpe_enable [ {{ bsd_nrpe_enable }} ]
+         bsd_nrpe_service [ {{ bsd_nrpe_service }} ]
+         bsd_nrpe_rcconf
+         {{ bsd_nrpe_rcconf | to_nice_yaml }}
+         bsd_nrpe_conf_recreate [ {{ bsd_nrpe_conf_recreate }} ]
+         bsd_nrpe_conf_files
+         {{ bsd_nrpe_conf_files | to_nice_yaml }}
+         bsd_nrpe_conf_options
+         {{ bsd_nrpe_conf_options | to_yaml }}
   debug:
     msg: "{{ msg.split('\n') }}"
 

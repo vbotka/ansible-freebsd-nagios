@@ -1,0 +1,98 @@
+---
+
+- name: "nagios: Remove config files."
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ bsd_nagios_conf_files }}"
+  when: bsd_nagios_conf_recreate
+
+- name: "nagios: Create config files."
+  include_tasks: conf/conf-create.yml
+  loop: "{{ bsd_nagios_conf_files }}"
+
+- name: "nagios: Configure nagios"
+  lineinfile:
+    dest: "{{ item.0.file }}"
+    regexp: "^\\s*#*\\s*{{ item.1.key }}"
+    line: "{{ item.1.key }}={{ item.1.val }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
+  when: item.1.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Remove nagios configuration items"
+  lineinfile:
+    dest: "{{ item.0.file }}"
+    regexp: "^\\s*#*\\s*{{ item.1.key }}"
+    line: "# {{ item.1.key }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
+  when: not item.1.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Configure nagios cfg_files"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: "^\\s*#*\\s*cfg_file={{ item.cfg_file }}"
+    line: "cfg_file={{ item.cfg_file }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_files }}"
+  when: item.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Remove nagios cfg_files"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: "^\\s*#*\\s*cfg_file={{ item.cfg_file }}"
+    line: "# cfg_file={{ item.cfg_file }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_files }}"
+  when: not item.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Create cfg_dirs"
+  file:
+    state: directory
+    path: "{{ item.cfg_dir }}"
+  loop: "{{ bsd_nagios_cfg_dirs }}"
+  when: item.present|default('true')|bool
+
+- name: "nagios: Configure nagios cfg_dirs"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: "^\\s*#*\\s*cfg_dir={{ item.cfg_dir }}"
+    line: "cfg_dir={{ item.cfg_dir }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_dirs }}"
+  when: item.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Remove nagios cfg_dirs"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: "^\\s*#*\\s*cfg_dir={{ item.cfg_dir }}"
+    line: "# cfg_dir={{ item.cfg_dir }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_dirs }}"
+  when: not item.present|default('true')|bool
+  notify: verify and reload nagios
+
+- name: "nagios: Configure nagios objects"
+  blockinfile:
+    dest: "{{ item.0.file }}"
+    marker: "# {mark} ansible managed block \
+             [{{ item.1.template }}: {{ item.1.name }}]"
+    state: "{{ item.1.state }}"
+    block: "{{ lookup('template', item.1.template) }}"
+    create: "yes"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ lookup('subelements',bsd_nagios_objects,'objects') }}"
+  notify: verify and reload nagios
+
+# Note: Validate does not work. Optional path to config not available.
+# validate: "{{ bsd_nagios_program }} -v %s"
+# msg: 'failed to validate: rc:1 error:'
+
+# EOF
+...

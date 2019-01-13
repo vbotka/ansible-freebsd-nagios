@@ -1,0 +1,45 @@
+---
+# nagios handlers freebsd_nagios
+
+- name: enable and start nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: started
+    enabled: "yes"
+
+- name: disable and stop nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: stopped
+    enabled: "no"
+
+- name: start nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: started
+
+- name: stop nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: stopped
+
+- name: restart nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: restarted
+  when: bsd_nagios_enable
+
+- name: reload nagios
+  service:
+    name: "{{ bsd_nagios_service }}"
+    state: reloaded
+  when: bsd_nagios_enable
+
+- name: verify nagios
+  command: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
+
+- name: verify and reload nagios
+  import_tasks: nagios-verify-reload.yml
+
+# EOF
+...

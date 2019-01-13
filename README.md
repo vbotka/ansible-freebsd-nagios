@@ -80,11 +80,18 @@ apache_directory_blocks:
   - Directory: "/usr/local/www/nagios/"
     Includefile: "usr-local-www-nagios.conf"
     Conf:
+      - "AllowOverride AuthConfig"
+      - "AuthType Basic"
+      - "AuthBasicProvider file"
+      - "AuthUserFile /usr/local/etc/nagios/htpasswd.users"
+      - "AuthName MySite"
+      - "Require valid-user"
+      - "Order allow,deny"
+      - "Allow from 10.1.0.11"
       - "DirectoryIndex index.php index.html index.htm"
       - "AddType application/x-httpd-php .php"
       - "AddType application/x-httpd-php-source .phps"
       - "Options Indexes FollowSymLinks"
-      - "AllowOverride All"
       - "Require all granted"
       - "php_flag engine on"
       - "php_admin_value open_basedir /usr/local/www/nagios/:/var/spool/nagios/"
@@ -102,11 +109,19 @@ apache_httpd_conf_modules:
   - { module: "cgid_module", mod: "mod_cgid.so", present: true }
 ```
 
+7) Create password for nagiosadmin.
+
+```
+htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
+```
+
 References
 ----------
 
 - [Nagios Documentation](https://assets.nagios.com/downloads/nagioscore/docs/)
 - [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
+- [Apache HowTo: Authentication and Authorization](https://httpd.apache.org/docs/2.4/howto/auth.html)
+- [Apache HowTo: Access Control](https://httpd.apache.org/docs/2.4/howto/access.html)
 
 License
 -------

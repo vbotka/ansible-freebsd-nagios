@@ -1,39 +1,9 @@
 ---
-# handlers vbotka.freebsd-nagios
+# handlers freebsd_nagios
 
-- name: enable and start nagios
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: started
-    enabled: "yes"
-
-- name: disable and stop nagios
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: stopped
-    enabled: "no"
-
-- name: start nagios
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: started
-
-- name: stop nagios
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: stopped
-
-- name: restart nagios
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: restarted
-  when: bsd_nagios_enable
-
-- name: reload named
-  service:
-    name: "{{ bsd_nagios_service }}"
-    state: reloaded
-  when: bsd_nagios_enable
+- import_tasks: nagios.yml
+- import_tasks: nsca.yml
+- import_tasks: nrpe.yml
 
 # EOF
 ...
