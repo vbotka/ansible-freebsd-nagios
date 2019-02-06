@@ -1,6 +1,6 @@
 ---
 
-- name: "rcconf-nagios: Enable and start {{ bsd_nagios_service }}"
+- name: "rcconf:nagios: Enable and start {{ bsd_nagios_service }}"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ bsd_nagios_service }}_enable"
@@ -9,7 +9,7 @@
   notify: enable and start nagios
   when: bsd_nagios_enable
 
-- name: "rcconf-nagios: Disable and stop {{ bsd_nagios_service }}"
+- name: "rcconf:nagios: Disable and stop {{ bsd_nagios_service }}"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ bsd_nagios_service }}_enable"
@@ -18,7 +18,7 @@
   notify: disable and stop nagios
   when: not bsd_nagios_enable
 
-- name: "rcconf-nagios: Configure nagios in /etc/rc.conf"
+- name: "rcconf:nagios: Configure nagios in /etc/rc.conf"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ item.key }}"

@@ -1,19 +1,19 @@
 ---
 
-- name: "nrpe: Remove config files."
+- name: "conf:nrpe: Remove config files."
   file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nrpe_conf_files }}"
   when: bsd_nrpe_conf_recreate
 
-- name: "nrpe: Create config files."
+- name: "conf:nrpe: Create config files."
   include_tasks: conf/conf-create.yml
   loop: "{{ bsd_nrpe_conf_files }}"
   vars:
     bsd_nagios_conf_sample: ".sample"
 
-- name: "nrpe: Configure nrpe"
+- name: "conf:nrpe: Configure nrpe"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
@@ -23,7 +23,7 @@
   when: item.1.present|default('true')|bool
   notify: reload nrpe
 
-- name: "nrpe: Remove nrpe configuration items"
+- name: "conf:nrpe: Remove nrpe configuration items"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"

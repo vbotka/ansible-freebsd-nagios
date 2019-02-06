@@ -36,10 +36,12 @@
          {{ bsd_nagios_conf_files | to_nice_yaml }}
          bsd_nagios_conf_options
          {{ bsd_nagios_conf_options | to_yaml }}
-         bsd_nagios_cfg_files
-         {{ bsd_nagios_cfg_files | to_yaml }}
-         bsd_nagios_cfg_dirs
-         {{ bsd_nagios_cfg_dirs | to_yaml }}
+         bsd_nagios_conf_cfg_files
+         {{ bsd_nagios_conf_cfg_files | to_yaml }}
+         bsd_nagios_conf_cfg_dirs
+         {{ bsd_nagios_conf_cfg_dirs | to_yaml }}
+         bsd_nagios_objects_dir [ {{ bsd_nagios_objects_dir }} ]
+         bsd_nagios_objects_dir_extension [ {{ bsd_nagios_objects_dir_extension }} ]
          bsd_nagios_objects
          {{ bsd_nagios_objects | to_yaml }}
 

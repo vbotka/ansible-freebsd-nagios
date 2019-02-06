@@ -1,17 +1,18 @@
 ---
 
-- name: "nagios: Remove config files."
+# configuration files and options
+- name: "conf:nagios: Remove config files."
   file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nagios_conf_files }}"
   when: bsd_nagios_conf_recreate
 
-- name: "nagios: Create config files."
+- name: "conf:nagios: Create config files."
   include_tasks: conf/conf-create.yml
   loop: "{{ bsd_nagios_conf_files }}"
 
-- name: "nagios: Configure nagios"
+- name: "conf:nagios: Configure Nagios"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
@@ -21,7 +22,7 @@
   when: item.1.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Remove nagios configuration items"
+- name: "conf:nagios: Remove Nagios configuration items"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
@@ -31,34 +32,36 @@
   when: not item.1.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Configure nagios cfg_files"
+# cfg_file in nagios.cfg
+- name: "conf:nagios: Configure options cfg_file in nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: "^\\s*#*\\s*cfg_file={{ item.cfg_file }}"
     line: "cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nagios_cfg_files }}"
+  loop: "{{ bsd_nagios_conf_cfg_files }}"
   when: item.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Remove nagios cfg_files"
+- name: "conf:nagios: Remove options cfg_file from nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: "^\\s*#*\\s*cfg_file={{ item.cfg_file }}"
     line: "# cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nagios_cfg_files }}"
+  loop: "{{ bsd_nagios_conf_cfg_files }}"
   when: not item.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Create cfg_dirs"
+# cfg_dir in nagios.cfg
+- name: "conf:nagios: Create cfg_dirs"
   file:
     state: directory
     path: "{{ item.cfg_dir }}"
-  loop: "{{ bsd_nagios_cfg_dirs }}"
+  loop: "{{ bsd_nagios_conf_cfg_dirs }}"
   when: item.present|default('true')|bool
 
-- name: "nagios: Configure nagios cfg_dirs"
+- name: "conf:nagios: Configure options cfg_dir in nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: "^\\s*#*\\s*cfg_dir={{ item.cfg_dir }}"
@@ -68,7 +71,7 @@
   when: item.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Remove nagios cfg_dirs"
+- name: "conf:nagios: Remove options cfg_dir from nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: "^\\s*#*\\s*cfg_dir={{ item.cfg_dir }}"
@@ -78,12 +81,35 @@
   when: not item.present|default('true')|bool
   notify: verify and reload nagios
 
-- name: "nagios: Configure nagios objects"
+# objects from files in directory bsd_nagios_objects_dir
+- name: "conf:nagios: Find config files in {{ bsd_nagios_objects_dir }}"
+  find:
+    paths: "{{ bsd_nagios_objects_dir }}"
+    patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
+  delegate_to: localhost
+  register: result
+
+- name: "conf:nagios: List object files in {{ bsd_nagios_objects_dir }}"
+  debug:
+    msg: "{{ result | json_query('files[].path') }}"
+  when: bsd_nagios_debug
+
+- name: "conf:nagios: Configure objects"
+  include_tasks: conf-objects.yml
+  loop: "{{ result | json_query('files[].path') }}"
+
+- name: "conf:nagios: List objects in bsd_nagios_objects"
+  debug:
+    var: bsd_nagios_objects
+  when: bsd_nagios_debug
+
+# objects from variable bsd_nagios_objects
+- name: "conf:nagios: Configure nagios objects"
   blockinfile:
     dest: "{{ item.0.file }}"
     marker: "# {mark} ansible managed block \
              [{{ item.1.template }}: {{ item.1.name }}]"
-    state: "{{ item.1.state }}"
+    state: "{{ item.1.state|default('present') }}"
     block: "{{ lookup('template', item.1.template) }}"
     create: "yes"
     backup: "{{ bsd_nagios_backup_conf }}"

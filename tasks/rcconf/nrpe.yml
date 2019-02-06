@@ -1,6 +1,6 @@
 ---
 
-- name: "rcconf-nrpe: Enable and start {{ bsd_nrpe_service }}"
+- name: "rcconf:nrpe: Enable and start {{ bsd_nrpe_service }}"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ bsd_nrpe_service }}_enable"
@@ -9,7 +9,7 @@
   notify: enable and start nrpe
   when: bsd_nrpe_enable
 
-- name: "rcconf-nrpe: Disable and stop {{ bsd_nrpe_service }}"
+- name: "rcconf:nrpe: Disable and stop {{ bsd_nrpe_service }}"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ bsd_nrpe_service }}_enable"
@@ -18,7 +18,7 @@
   notify: disable and stop nrpe
   when: not bsd_nrpe_enable
 
-- name: "rcconf-nrpe: Configure nrpe in /etc/rc.conf"
+- name: "rcconf:nrpe: Configure nrpe in /etc/rc.conf"
   lineinfile:
     dest: /etc/rc.conf
     regexp: "^{{ item.key }}"

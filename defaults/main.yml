@@ -32,7 +32,7 @@ bsd_nagios_conf_owner: root
 bsd_nagios_conf_group: nagios
 bsd_nagios_conf_sample: "-sample"
 
-# nagios
+# configuration files
 bsd_nagios_conf_recreate: false
 bsd_nagios_conf_path: "/usr/local/etc/nagios"
 bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
@@ -48,11 +48,13 @@ bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_objects }}/templates.cfg"
   - "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
   - "{{ bsd_nagios_conf_objects }}/windows.cfg"
+# configuration options
 bsd_nagios_conf_options:
   - file: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     conf:
       - {key: "log_file", val: "/var/spool/nagios/nagios.log", present: true}
-bsd_nagios_cfg_files:
+# configuration cfg_file in nagions.cfg
+bsd_nagios_conf_cfg_files:
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/commands.cfg", present: true}
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/contacts.cfg", present: true}
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/localhost.cfg", present: true}
@@ -61,10 +63,19 @@ bsd_nagios_cfg_files:
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/windows.cfg", present: false}
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/switch.cfg", present: false}
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/printer.cfg", present: false}
-bsd_nagios_cfg_dirs: []
-bsd_nagios_objects: []
+# configuration cfg_dir in nagions.cfg
+bsd_nagios_conf_cfg_dirs: []
 
-# nsca
+# objects
+bsd_nagios_objects: []
+bsd_nagios_objects_dir: "{{ role_path }}/files/nagios-objects.d"
+bsd_nagios_objects_dir_extension: conf
+
+# NSCA (Nagios Service Check Acceptor)
+# Linux/Unix daemon allows you to integrate passive alerts and checks
+# from remote machines and applications with Nagios. Useful for
+# processing security alerts, as well as redundant and distributed
+# Nagios setups.
 bsd_nsca_conf_recreate: false
 bsd_nsca_conf_files:
   - "{{ bsd_nagios_conf_path }}/nsca.cfg"
@@ -73,7 +84,12 @@ bsd_nsca_conf_options:
     conf:
       - {key: "log_facility", val: "daemon", present: true}
 
-# nrpe
+# NRPE (Nagios Remote Plugin Executor)
+# Allows you to remotely execute Nagios plugins on other Linux/Unix
+# machines. This allows you to monitor remote machine metrics (disk
+# usage, CPU load, etc.). NRPE can also communicate with some of the
+# Windows agent addons, so you can execute scripts and check metrics
+# on remote Windows machines as well.
 bsd_nrpe_conf_recreate: false
 bsd_nrpe_conf_path: "/usr/local/etc"
 bsd_nrpe_conf_files:

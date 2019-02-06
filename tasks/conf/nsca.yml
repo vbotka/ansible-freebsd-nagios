@@ -1,17 +1,17 @@
 ---
 
-- name: "nsca: Remove config files."
+- name: "conf:nsca: Remove config files."
   file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nsca_conf_files }}"
   when: bsd_nsca_conf_recreate
 
-- name: "nsca: Create config files."
+- name: "conf:nsca: Create config files."
   include_tasks: conf/conf-create.yml
   loop: "{{ bsd_nsca_conf_files }}"
 
-- name: "nsca: Configure nsca"
+- name: "conf:nsca: Configure nsca"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
@@ -21,7 +21,7 @@
   when: item.1.present|default('true')|bool
   notify: reload nsca
 
-- name: "nsca: Remove nsca configuration items"
+- name: "conf:nsca: Remove nsca configuration items"
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
