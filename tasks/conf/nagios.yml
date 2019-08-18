@@ -20,7 +20,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
   when: item.1.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 - name: "conf:nagios: Remove Nagios configuration items"
   lineinfile:
@@ -30,7 +32,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
   when: not item.1.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 # cfg_file in nagios.cfg
 - name: "conf:nagios: Configure options cfg_file in nagios.cfg"
@@ -41,7 +45,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   when: item.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 - name: "conf:nagios: Remove options cfg_file from nagios.cfg"
   lineinfile:
@@ -51,7 +57,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   when: not item.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 # cfg_dir in nagios.cfg
 - name: "conf:nagios: Create cfg_dirs"
@@ -69,7 +77,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_cfg_dirs }}"
   when: item.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 - name: "conf:nagios: Remove options cfg_dir from nagios.cfg"
   lineinfile:
@@ -79,7 +89,9 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_cfg_dirs }}"
   when: not item.present|default('true')|bool
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 # objects from files in directory bsd_nagios_objects_dir
 - name: "conf:nagios: Find config files in {{ bsd_nagios_objects_dir }}"
@@ -114,7 +126,9 @@
     create: "yes"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ lookup('subelements',bsd_nagios_objects,'objects') }}"
-  notify: verify and reload nagios
+  notify:
+    - verify nagios
+    - reload nagios
 
 # Note: Validate does not work. Optional path to config not available.
 # validate: "{{ bsd_nagios_program }} -v %s"

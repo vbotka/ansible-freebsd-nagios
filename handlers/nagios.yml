@@ -29,17 +29,14 @@
     state: restarted
   when: bsd_nagios_enable
 
+- name: verify nagios
+  command: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
+
 - name: reload nagios
   service:
     name: "{{ bsd_nagios_service }}"
     state: reloaded
   when: bsd_nagios_enable
-
-- name: verify nagios
-  command: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
-
-- name: verify and reload nagios
-  import_tasks: nagios-verify-reload.yml
 
 # EOF
 ...
