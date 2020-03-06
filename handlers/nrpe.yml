@@ -5,13 +5,13 @@
   service:
     name: "{{ bsd_nrpe_service }}"
     state: started
-    enabled: "yes"
+    enabled: true
 
 - name: disable and stop nrpe
   service:
     name: "{{ bsd_nrpe_service }}"
     state: stopped
-    enabled: "no"
+    enabled: false
 
 - name: start nrpe
   service:
@@ -27,13 +27,13 @@
   service:
     name: "{{ bsd_nrpe_service }}"
     state: restarted
-  when: bsd_nrpe_enable
+  when: bsd_nrpe_enable|bool
 
 - name: reload nrpe
   service:
     name: "{{ bsd_nrpe_service }}"
     state: reloaded
-  when: bsd_nrpe_enable
+  when: bsd_nrpe_enable|bool
 
 # EOF
 ...

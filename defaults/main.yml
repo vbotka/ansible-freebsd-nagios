@@ -5,27 +5,27 @@ bsd_nagios_enable: false
 bsd_nsca_enable: false
 bsd_nrpe_enable: false
 bsd_nagios_debug: false
-bsd_nagios_backup_conf: "no"
+bsd_nagios_backup_conf: false
 
-freebsd_install_method: "packages"
-# freebsd_install_method: "ports"
-freebsd_use_packages: "yes"
+freebsd_install_method: packages
+# freebsd_install_method: ports
+freebsd_use_packages: true
 freebsd_install_retries: 10
 freebsd_install_delay: 5
 
 bsd_nagios_packages:
-  - "net-mgmt/nagios4"
-  - "net-mgmt/nagios-plugins"
-  - "net-mgmt/nsca"
-  - "net-mgmt/nrpe3"
+  - net-mgmt/nagios4
+  - net-mgmt/nagios-plugins
+  - net-mgmt/nsca
+  - net-mgmt/nrpe3
 
 # rc.conf
-bsd_nagios_program: "/usr/local/bin/nagios"
-bsd_nagios_service: "nagios"
+bsd_nagios_program: /usr/local/bin/nagios
+bsd_nagios_service: nagios
 bsd_nagios_rcconf: []
-bsd_nsca_service: "nsca"
+bsd_nsca_service: nsca
 bsd_nsca_rcconf: []
-bsd_nrpe_service: "nrpe3"
+bsd_nrpe_service: nrpe3
 bsd_nrpe_rcconf: []
 
 bsd_nagios_conf_owner: root
@@ -34,7 +34,7 @@ bsd_nagios_conf_sample: "-sample"
 
 # configuration files
 bsd_nagios_conf_recreate: false
-bsd_nagios_conf_path: "/usr/local/etc/nagios"
+bsd_nagios_conf_path: /usr/local/etc/nagios
 bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
 bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_path }}/cgi.cfg"

@@ -5,13 +5,13 @@
   service:
     name: "{{ bsd_nagios_service }}"
     state: started
-    enabled: "yes"
+    enabled: true
 
 - name: disable and stop nagios
   service:
     name: "{{ bsd_nagios_service }}"
     state: stopped
-    enabled: "no"
+    enabled: false
 
 - name: start nagios
   service:
@@ -27,7 +27,7 @@
   service:
     name: "{{ bsd_nagios_service }}"
     state: restarted
-  when: bsd_nagios_enable
+  when: bsd_nagios_enable|bool
 
 - name: verify nagios
   command: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
@@ -36,7 +36,7 @@
   service:
     name: "{{ bsd_nagios_service }}"
     state: reloaded
-  when: bsd_nagios_enable
+  when: bsd_nagios_enable|bool
 
 # EOF
 ...

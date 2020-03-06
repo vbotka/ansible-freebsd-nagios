@@ -1,63 +1,58 @@
-freebsd_nagios
-==============
+## freebsd_nagios
 
 [![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
 
 [Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
 
 
-Requirements
-------------
+# Requirements
 
 No requiremenst.
 
 
-Recommended
------------
+# Recommended
 
 - [Apache](https://galaxy.ansible.com/vbotka/apache/)
 - [Certificate](https://galaxy.ansible.com/vbotka/certificate/)
 
 
-Variables
----------
+# Variables
 
-TBD. Review the defaults and examples in vars.
+Review the defaults and examples in vars.
 
 
-Workflow
---------
+# Workflow
 
-1) Change shell to /bin/sh.
+1) Change shell to /bin/sh
 
 ```
-# ansible host -e 'ansible_shell_type=csh ansible_shell_executable=/bin/csh' -a 'sudo pw usermod admin -s /bin/sh'
+shell> ansible host -e 'ansible_shell_type=csh ansible_shell_executable=/bin/csh' -a 'sudo pw usermod admin -s /bin/sh'
 ```
 
-2) Install role.
+2) Install role
 
 ```
-# ansible-galaxy install vbotka.freebsd_nagios
+shell> ansible-galaxy install vbotka.freebsd_nagios
 ```
 
-3) Fit variables.
+3) Fit variables
 
 ```
-# editor vbotka.freebsd_nagios/vars/main.yml
+shell> editor vbotka.freebsd_nagios/vars/main.yml
 ```
 
-4) Create and run the playbook.
+4) Create and run the playbook
 
 ```
-# cat freebsd-nagios.yml
+shell> cat freebsd-nagios.yml
 - hosts: nagios.example.com
   roles:
     - vbotka.freebsd_nagios
     
-# ansible-playbook freebsd-nagios.yml
+shell> ansible-playbook freebsd-nagios.yml
 ```
 
-5) Create [certificates](https://galaxy.ansible.com/vbotka/certificate/).
+5) Create [certificates](https://galaxy.ansible.com/vbotka/certificate/)
 
 ```
 certificate_self_signed:
@@ -67,7 +62,7 @@ certificate_self_signed:
       crt: "nagios.example.com.crt" }
 ```
 
-6) Configure [Apache](https://galaxy.ansible.com/vbotka/apache/).
+6) Configure [Apache](https://galaxy.ansible.com/vbotka/apache/)
 
 ```
 apache_vhost:
@@ -109,27 +104,25 @@ apache_httpd_conf_modules:
   - { module: "cgid_module", mod: "mod_cgid.so", present: true }
 ```
 
-7) Create password for nagiosadmin.
+7) Create password for nagiosadmin
 
 ```
-htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
+shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 ```
 
-References
-----------
+# References
 
 - [Nagios Documentation](https://assets.nagios.com/downloads/nagioscore/docs/)
 - [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
 - [Apache HowTo: Authentication and Authorization](https://httpd.apache.org/docs/2.4/howto/auth.html)
 - [Apache HowTo: Access Control](https://httpd.apache.org/docs/2.4/howto/access.html)
 
-License
--------
+
+# License
 
 [![license](https://img.shields.io/badge/license-BSD-red.svg)](https://www.freebsd.org/doc/en/articles/bsdl-gpl/article.html)
 
 
-Author Information
-------------------
+# Author Information
 
 [Vladimir Botka](https://botka.link)

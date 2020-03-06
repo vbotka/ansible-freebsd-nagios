@@ -5,13 +5,13 @@
   service:
     name: "{{ bsd_nsca_service }}"
     state: started
-    enabled: "yes"
+    enabled: true
 
 - name: disable and stop nsca
   service:
     name: "{{ bsd_nsca_service }}"
     state: stopped
-    enabled: "no"
+    enabled: false
 
 - name: start nsca
   service:
@@ -27,13 +27,13 @@
   service:
     name: "{{ bsd_nsca_service }}"
     state: restarted
-  when: bsd_nsca_enable
+  when: bsd_nsca_enable|bool
 
 - name: reload nsca
   service:
     name: "{{ bsd_nsca_service }}"
     state: reloaded
-  when: bsd_nsca_enable
+  when: bsd_nsca_enable|bool
 
 # EOF
 ...
