@@ -3,7 +3,7 @@ quiet: False
 parseable: True
 use_default_rules: True
 rulesdir:
-  - /home/vlado/.ansible/ansible-lint-rules
+  - $HOME/.ansible/ansible-lint-rules
 # skip_list:
 #  - '306'
 
