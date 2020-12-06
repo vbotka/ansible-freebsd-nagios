@@ -19,7 +19,7 @@
     line: "{{ item.1.key }}={{ item.1.val }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
-  when: item.1.present|default('true')|bool
+  when: item.1.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -31,7 +31,7 @@
     line: "# {{ item.1.key }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
-  when: not item.1.present|default('true')|bool
+  when: not item.1.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -44,7 +44,7 @@
     line: "cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
-  when: item.present|default('true')|bool
+  when: item.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -56,7 +56,7 @@
     line: "# cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
-  when: not item.present|default('true')|bool
+  when: not item.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -67,7 +67,7 @@
     state: directory
     path: "{{ item.cfg_dir }}"
   loop: "{{ bsd_nagios_conf_cfg_dirs }}"
-  when: item.present|default('true')|bool
+  when: item.present|default(true)|bool
 
 - name: "conf:nagios: Configure options cfg_dir in nagios.cfg"
   lineinfile:
@@ -76,7 +76,7 @@
     line: "cfg_dir={{ item.cfg_dir }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_cfg_dirs }}"
-  when: item.present|default('true')|bool
+  when: item.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -88,7 +88,7 @@
     line: "# cfg_dir={{ item.cfg_dir }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_cfg_dirs }}"
-  when: not item.present|default('true')|bool
+  when: not item.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios

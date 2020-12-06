@@ -20,7 +20,7 @@
     line: "{{ item.1.key }}={{ item.1.val }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
-  when: item.1.present|default('true')|bool
+  when: item.1.present|default(true)|bool
   notify: reload nrpe
 
 - name: "conf:nrpe: Remove nrpe configuration items"
@@ -30,7 +30,7 @@
     line: "# {{ item.1.key }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
-  when: not item.1.present|default('true')|bool
+  when: not item.1.present|default(true)|bool
   notify: reload nrpe
 
 # EOF
