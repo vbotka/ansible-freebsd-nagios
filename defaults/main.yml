@@ -1,6 +1,7 @@
 ---
 # defaults freebsd_nagios
 
+bsd_nagios_install: true
 bsd_nagios_enable: false
 bsd_nsca_enable: false
 bsd_nrpe_enable: false

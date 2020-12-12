@@ -2,10 +2,11 @@
 # tasks freebsd_nagios
 
 - import_tasks: debug.yml
-  when: bsd_nagios_debug
+  when: bsd_nagios_debug|bool
   tags: [bsd_nagios_debug, always]
 
 - import_tasks: packages.yml
+  when: bsd_nagios_install|bool
   tags: bsd_nagios_packages
 
 - import_tasks: conf.yml

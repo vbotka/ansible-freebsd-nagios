@@ -16,9 +16,10 @@
          freebsd_use_packages [{{ freebsd_use_packages }}]
          freebsd_install_retries [{{ freebsd_install_retries }}]
          freebsd_install_delay [{{ freebsd_install_delay }}]
+
+         bsd_nagios_install [{{ bsd_nagios_install }}]
          bsd_nagios_packages
          {{ bsd_nagios_packages|to_nice_yaml }}
-
          bsd_nagios_enable [{{ bsd_nagios_enable }}]
          bsd_nagios_backup_conf [{{ bsd_nagios_backup_conf }}]
          bsd_nagios_service [{{ bsd_nagios_service }}]
