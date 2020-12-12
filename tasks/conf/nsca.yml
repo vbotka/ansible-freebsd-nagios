@@ -5,7 +5,7 @@
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nsca_conf_files }}"
-  when: bsd_nsca_conf_recreate
+  when: bsd_nsca_conf_recreate|bool
 
 - name: "conf:nsca: Create config files."
   include_tasks: conf/conf-create.yml
