@@ -30,7 +30,7 @@ bsd_nrpe_service: nrpe3
 bsd_nrpe_rcconf: []
 
 bsd_nagios_conf_owner: root
-bsd_nagios_conf_group: nagios
+bsd_nagios_conf_group: wheel
 bsd_nagios_conf_sample: "-sample"
 
 # configuration files
@@ -50,10 +50,17 @@ bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
   - "{{ bsd_nagios_conf_objects }}/windows.cfg"
 # configuration options
+bsd_nagios_user: nagios
+bsd_nagios_group: nagios
+bsd_nagios_log_file: /var/spool/nagios/nagios.log
+bsd_nagios_check_result_path: /var/spool/nagios/checkresults
 bsd_nagios_conf_options:
   - file: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     conf:
-      - {key: "log_file", val: "/var/spool/nagios/nagios.log", present: true}
+      - {key: nagios_user, val: "{{ bsd_nagios_user }}", present: true}
+      - {key: nagios_group, val: "{{ bsd_nagios_group }}", present: true}
+      - {key: log_file, val: "{{ bsd_nagios_log_file: }}", present: true}
+      - {key: check_result_path, val: "{{ bsd_nagios_check_result_path }}", present: true}
 # configuration cfg_file in nagions.cfg
 bsd_nagios_conf_cfg_files:
   - {cfg_file: "{{ bsd_nagios_conf_objects }}/commands.cfg", present: true}

@@ -36,6 +36,10 @@
          bsd_nagios_conf_objects [{{ bsd_nagios_conf_objects }}]
          bsd_nagios_conf_files
          {{ bsd_nagios_conf_files|to_nice_yaml }}
+         bsd_nagios_user [{{ bsd_nagios_user }}]
+         bsd_nagios_group [{{ bsd_nagios_group }}]
+         bsd_nagios_log_file [{{ bsd_nagios_log_file }}]
+         bsd_nagios_check_result_path [{{ bsd_nagios_check_result_path }}]
          bsd_nagios_conf_options
          {{ bsd_nagios_conf_options|to_yaml }}
          bsd_nagios_conf_cfg_files

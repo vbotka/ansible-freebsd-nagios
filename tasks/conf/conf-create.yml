@@ -5,17 +5,28 @@
     path: "{{ item }}"
   register: conf_file
 
-- name: "conf:conf-create: Create {{ item }}"
-  command: "cp {{ item }}{{ bsd_nagios_conf_sample }} {{ item }}"
-  args:
-    creates: "{{ item }}"
+- block:
+    - name: "conf:conf-create: Stat {{ item }}{{ bsd_nagios_conf_sample }}"
+      stat:
+        path: "{{ item }}{{ bsd_nagios_conf_sample }}"
+      register: conf_file_sample
+    - name: "conf:conf-create: Create {{ item }}"
+      copy:
+        remote_src: True
+        src: "{{ item }}{{ bsd_nagios_conf_sample }}"
+        dest: "{{ item }}"
+        owner:  "{{ conf_file_sample.stat.pw_name }}"
+        group: "{{ conf_file_sample.stat.gr_name }}"
+        mode: preserve
   when: not conf_file.stat.exists
 
-- name: "conf:conf-create: Chown {{ item }}"
-  file:
-    path: "{{ item }}"
-    owner: "{{ bsd_nagios_conf_owner }}"
-    group: "{{ bsd_nagios_conf_group }}"
+# Let's keep the samples' ownership and mode
+# TODO: Optionally change ownership and mode
+# - name: "conf:conf-create: Chown {{ item }}"
+#   file:
+#     path: "{{ item }}"
+#     owner: "{{ bsd_nagios_conf_owner }}"
+#     group: "{{ bsd_nagios_conf_group }}"
 
 # EOF
 ...

@@ -12,7 +12,7 @@
   include_tasks: conf/conf-create.yml
   loop: "{{ bsd_nagios_conf_files }}"
 
-- name: "conf:nagios: Configure Nagios"
+- name: "conf:nagios: Configure Nagios."
   lineinfile:
     dest: "{{ item.0.file }}"
     regexp: "^\\s*#*\\s*{{ item.1.key }}"
@@ -24,11 +24,12 @@
     - verify nagios
     - reload nagios
 
-- name: "conf:nagios: Remove Nagios configuration items"
+- name: "conf:nagios: Remove Nagios configuration items."
   lineinfile:
+    backrefs: true
     dest: "{{ item.0.file }}"
-    regexp: "^\\s*#*\\s*{{ item.1.key }}"
-    line: "# {{ item.1.key }}"
+    regexp: "^\\s*#*\\s*{{ item.1.key }}(.*)$"
+    line: "# {{ item.1.key }}=\\1"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_options|subelements('conf') }}"
   when: not item.1.present|default(true)|bool
@@ -106,17 +107,17 @@
     msg: "{{ result | json_query('files[].path') }}"
   when: bsd_nagios_debug|bool
 
-- name: "conf:nagios: Configure objects"
+- name: "conf:nagios: Configure objects."
   include_tasks: conf-objects.yml
   loop: "{{ result | json_query('files[].path') }}"
 
-- name: "conf:nagios: List objects in bsd_nagios_objects"
+- name: "conf:nagios: List objects in bsd_nagios_objects."
   debug:
     var: bsd_nagios_objects
   when: bsd_nagios_debug|bool
 
 # objects from variable bsd_nagios_objects
-- name: "conf:nagios: Configure nagios objects"
+- name: "conf:nagios: Configure nagios objects."
   blockinfile:
     dest: "{{ item.0.file }}"
     marker: "# {mark} ansible managed block \
