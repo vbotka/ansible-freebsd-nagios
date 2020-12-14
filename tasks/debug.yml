@@ -22,6 +22,7 @@
          {{ bsd_nagios_packages|to_nice_yaml }}
          bsd_nagios_enable [{{ bsd_nagios_enable }}]
          bsd_nagios_backup_conf [{{ bsd_nagios_backup_conf }}]
+         bsd_nagios_audit [{{ bsd_nagios_audit }}]
          bsd_nagios_service [{{ bsd_nagios_service }}]
          bsd_nagios_program [{{ bsd_nagios_program|default('UNDEFINED') }}]
          bsd_nagios_user [{{ bsd_nagios_user|default('UNDEFINED') }}]

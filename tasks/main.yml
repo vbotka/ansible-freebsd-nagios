@@ -15,5 +15,9 @@
 - import_tasks: rcconf.yml
   tags: bsd_nagios_rcconf
 
+- import_tasks: audit.yml
+  when: bsd_nagios_audit|bool
+  tags: bsd_nagios_audit
+
 # EOF
 ...

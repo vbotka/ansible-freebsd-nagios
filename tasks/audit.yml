@@ -1,0 +1,22 @@
+---
+
+- name: "audit: Not implemented."
+  debug:
+    msg: Not implemeted yet.
+
+# TODO: Security Considerations
+# https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/4/en/security.html
+#
+# Use a Dedicated Monitoring Box.
+# Don't Run Nagios As Root.
+# Lock Down The Check Result Directory.
+# Lock Down The External Command File.
+# Require Authentication In The CGIs.
+# Implement Enhanced CGI Security Measures.
+# Use Full Paths In Command Definitions.
+# Strip Dangerous Characters From Macros.
+# Secure Access to Remote Agents.
+# Secure Communication Channels.
+  
+# EOF
+...

@@ -7,6 +7,7 @@ bsd_nsca_enable: false
 bsd_nrpe_enable: false
 bsd_nagios_debug: false
 bsd_nagios_backup_conf: false
+bsd_nagios_audit: false
 
 freebsd_install_method: packages
 # freebsd_install_method: ports
