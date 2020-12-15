@@ -9,8 +9,14 @@
   when: bsd_nagios_install|bool
   tags: bsd_nagios_packages
 
-- import_tasks: conf.yml
-  tags: bsd_nagios_conf
+- import_tasks: conf_nagios.yml
+  tags: bsd_nagios_conf_nagios
+
+- import_tasks: conf_nsca.yml
+  tags: bsd_nagios_conf_nsca
+
+- import_tasks: conf_nrpe.yml
+  tags: bsd_nagios_conf_nrpe
 
 - import_tasks: rcconf.yml
   tags: bsd_nagios_rcconf

@@ -108,7 +108,7 @@
   when: bsd_nagios_debug|bool
 
 - name: "conf:nagios: Configure objects."
-  include_tasks: conf-objects.yml
+  include_tasks: conf/conf-objects.yml
   loop: "{{ result | json_query('files[].path') }}"
 
 - name: "conf:nagios: List objects in bsd_nagios_objects."

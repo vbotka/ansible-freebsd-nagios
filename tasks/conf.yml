@@ -1,8 +1,0 @@
----
-
-- import_tasks: conf/nagios.yml
-- import_tasks: conf/nsca.yml
-- import_tasks: conf/nrpe.yml
-
-# EOF
-...
