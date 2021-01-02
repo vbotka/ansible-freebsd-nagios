@@ -1,6 +1,6 @@
 ---
 
-# objects from files in directory bsd_nagios_objects_dir
+# Read objects from files in directory bsd_nagios_objects_dir
 - name: "conf:dir_objects: Find files in {{ bsd_nagios_objects_dir }}"
   find:
     paths: "{{ bsd_nagios_objects_dir }}"
@@ -22,7 +22,7 @@
     var: bsd_nagios_objects
   when: bsd_nagios_debug|bool
 
-# objects from variable bsd_nagios_objects
+# Configure objects from variable bsd_nagios_objects
 - name: "conf:dir_objects: Configure nagios objects"
   blockinfile:
     dest: "{{ item.0.file }}"

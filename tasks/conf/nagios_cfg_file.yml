@@ -9,7 +9,7 @@
 - name: "conf:cfg_file: Configure options cfg_file in nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: '^\s*#*\s*cfg_file={{ item.cfg_file }}'
+    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.cfg_file }}\s*$'
     line: "cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
@@ -21,7 +21,7 @@
 - name: "conf:cfg_file: Remove options cfg_file from nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: '^\s*#*\s*cfg_file={{ item.cfg_file }}'
+    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.cfg_file }}\s*$'
     line: "# cfg_file={{ item.cfg_file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
