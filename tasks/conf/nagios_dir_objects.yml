@@ -1,0 +1,49 @@
+---
+
+# objects from files in directory bsd_nagios_objects_dir
+- name: "conf:dir_objects: Find files in {{ bsd_nagios_objects_dir }}"
+  find:
+    paths: "{{ bsd_nagios_objects_dir }}"
+    patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
+  delegate_to: localhost
+  register: result
+
+- name: "conf:dir_objects: List files in {{ bsd_nagios_objects_dir }}"
+  debug:
+    msg: "{{ result|json_query('files[].path') }}"
+  when: bsd_nagios_debug|bool
+
+- name: "conf:dir_objects: Read vars"
+  include_tasks: conf/nagios_vars.yml
+  loop: "{{ result|json_query('files[].path') }}"
+
+- name: "conf:dir_objects: List objects in bsd_nagios_objects"
+  debug:
+    var: bsd_nagios_objects
+  when: bsd_nagios_debug|bool
+
+# objects from variable bsd_nagios_objects
+- name: "conf:dir_objects: Configure nagios objects"
+  blockinfile:
+    dest: "{{ item.0.file }}"
+    marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
+    state: "{{ item.1.state|default('present') }}"
+    block: "{{ lookup('template', item.1.template) }}"
+    create: true
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ lookup('subelements',bsd_nagios_objects,'objects') }}"
+  loop_control:
+    label: "{{ item.0.file|dirname|basename }}
+            {{ item.0.file|basename }}
+            {{ item.1.template }}: {{ item.1.name }}
+            {{ item.1.state }}"
+  notify:
+    - verify nagios
+    - reload nagios
+
+# Note: Validate does not work. Optional path to config not available.
+# validate: "{{ bsd_nagios_program }} -v %s"
+# msg: 'failed to validate: rc:1 error:'
+
+# EOF
+...

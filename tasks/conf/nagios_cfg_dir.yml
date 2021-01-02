@@ -1,0 +1,36 @@
+---
+
+# cfg_dir in nagios.cfg
+- name: "conf:cfg_dir: Create cfg_dir"
+  file:
+    state: directory
+    path: "{{ item.cfg_dir }}"
+  loop: "{{ bsd_nagios_conf_cfg_dirs }}"
+  when: item.present|default(true)|bool
+
+- name: "conf:cfg_dir: Configure options cfg_dir in nagios.cfg"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: '^\s*#*\s*cfg_dir={{ item.cfg_dir }}'
+    line: "cfg_dir={{ item.cfg_dir }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_dirs }}"
+  when: item.present|default(true)|bool
+  notify:
+    - verify nagios
+    - reload nagios
+
+- name: "conf:cfg_dir: Remove options cfg_dir from nagios.cfg"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: '^\s*#*\s*cfg_dir={{ item.cfg_dir }}'
+    line: "# cfg_dir={{ item.cfg_dir }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_cfg_dirs }}"
+  when: not item.present|default(true)|bool
+  notify:
+    - verify nagios
+    - reload nagios
+
+# EOF
+...

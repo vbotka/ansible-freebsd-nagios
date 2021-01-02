@@ -1,35 +1,39 @@
 ---
 
-- name: "conf:nrpe: Remove config files."
+- name: "nrpe: Remove config files"
   file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nrpe_conf_files }}"
   when: bsd_nrpe_conf_recreate|bool
 
-- name: "conf:nrpe: Create config files."
-  include_tasks: conf/conf-create.yml
+- name: "nrpe: Create config files"
+  include_tasks: conf/create_file.yml
   loop: "{{ bsd_nrpe_conf_files }}"
   vars:
     bsd_nagios_conf_sample: ".sample"
 
-- name: "conf:nrpe: Configure nrpe"
+- name: "nrpe: Configure nrpe"
   lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: "^\\s*#*\\s*{{ item.1.key }}"
+    regexp: '^\s*#*\s*{{ item.1.key }}'
     line: "{{ item.1.key }}={{ item.1.val }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
+  loop_control:
+    label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
   when: item.1.present|default(true)|bool
   notify: reload nrpe
 
-- name: "conf:nrpe: Remove nrpe configuration items"
+- name: "nrpe: Remove nrpe configuration items"
   lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: "^\\s*#*\\s*{{ item.1.key }}"
-    line: "# {{ item.1.key }}"
+    regexp: '^\s*#*\s*{{ item.1.key }}(.*)$'
+    line: '# {{ item.1.key }}\g<1>'
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
+  loop_control:
+    label: "{{ item.0.file }} {{ item.1.key }}"
   when: not item.1.present|default(true)|bool
   notify: reload nrpe
 

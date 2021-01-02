@@ -1,16 +1,16 @@
 ---
 
-- name: "conf:conf-create: Stat {{ item }}"
+- name: "conf:create_file: Stat {{ item }}"
   stat:
     path: "{{ item }}"
   register: conf_file
 
 - block:
-    - name: "conf:conf-create: Stat {{ item }}{{ bsd_nagios_conf_sample }}"
+    - name: "conf:create_file: Stat {{ item }}{{ bsd_nagios_conf_sample }}"
       stat:
         path: "{{ item }}{{ bsd_nagios_conf_sample }}"
       register: conf_file_sample
-    - name: "conf:conf-create: Create {{ item }}"
+    - name: "conf:create_file: Create {{ item }}"
       copy:
         remote_src: True
         src: "{{ item }}{{ bsd_nagios_conf_sample }}"
@@ -22,7 +22,7 @@
 
 # Let's keep the samples' ownership and mode
 # TODO: Optionally change ownership and mode
-# - name: "conf:conf-create: Chown {{ item }}"
+# - name: "conf:create: Chown {{ item }}"
 #   file:
 #     path: "{{ item }}"
 #     owner: "{{ bsd_nagios_conf_owner }}"

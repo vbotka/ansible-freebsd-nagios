@@ -1,0 +1,34 @@
+---
+
+# cfg_file in nagios.cfg
+- name: "conf:cfg_file: Debug"
+  debug:
+    var: bsd_nagios_conf_cfg_files
+  when: bsd_nagios_debug|bool
+
+- name: "conf:cfg_file: Configure options cfg_file in nagios.cfg"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: '^\s*#*\s*cfg_file={{ item.cfg_file }}'
+    line: "cfg_file={{ item.cfg_file }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_conf_cfg_files }}"
+  when: item.present|default(true)|bool
+  notify:
+    - verify nagios
+    - reload nagios
+
+- name: "conf:cfg_file: Remove options cfg_file from nagios.cfg"
+  lineinfile:
+    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+    regexp: '^\s*#*\s*cfg_file={{ item.cfg_file }}'
+    line: "# cfg_file={{ item.cfg_file }}"
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_conf_cfg_files }}"
+  when: not item.present|default(true)|bool
+  notify:
+    - verify nagios
+    - reload nagios
+
+# EOF
+...
