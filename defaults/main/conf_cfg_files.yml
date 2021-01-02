@@ -1,0 +1,30 @@
+---
+# configuration cfg_file in nagions.cfg
+bsd_nagios_conf_cfg_files:
+  - file: "{{ bsd_nagios_conf_objects }}/commands.cfg"
+    objects: "{{ bsd_nagios_conf_objects_commands }}"
+    present: true
+  - file: "{{ bsd_nagios_conf_objects }}/contacts.cfg"
+    objects: "{{ bsd_nagios_conf_objects_contacts }}"
+    present: true
+  - file: "{{ bsd_nagios_conf_objects }}/localhost.cfg"
+    objects: "{{ bsd_nagios_conf_objects_localhost }}"
+    present: true
+  - file: "{{ bsd_nagios_conf_objects }}/templates.cfg"
+    objects: "{{ bsd_nagios_conf_objects_templates }}"
+    present: true
+  - file: "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
+    objects: "{{ bsd_nagios_conf_objects_timeperiods }}"
+    present: true
+  - file: "{{ bsd_nagios_conf_objects }}/windows.cfg"
+    objects: "{{ bsd_nagios_conf_objects_windows }}"
+    present: false
+  - file: "{{ bsd_nagios_conf_objects }}/switch.cfg"
+    objects: "{{ bsd_nagios_conf_objects_switch }}"
+    present: false
+  - file: "{{ bsd_nagios_conf_objects }}/printer.cfg"
+    objects: "{{ bsd_nagios_conf_objects_printer }}"
+    present: false
+
+# EOF
+...

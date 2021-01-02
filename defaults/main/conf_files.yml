@@ -1,0 +1,21 @@
+---
+# configuration files from samples
+bsd_nagios_conf_recreate: false
+bsd_nagios_conf_path: /usr/local/etc/nagios
+bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
+bsd_nagios_conf_sample: "-sample"
+bsd_nagios_conf_files:
+  - "{{ bsd_nagios_conf_path }}/cgi.cfg"
+  - "{{ bsd_nagios_conf_path }}/nagios.cfg"
+  - "{{ bsd_nagios_conf_path }}/resource.cfg"
+  - "{{ bsd_nagios_conf_objects }}/commands.cfg"
+  - "{{ bsd_nagios_conf_objects }}/contacts.cfg"
+  - "{{ bsd_nagios_conf_objects }}/localhost.cfg"
+  - "{{ bsd_nagios_conf_objects }}/printer.cfg"
+  - "{{ bsd_nagios_conf_objects }}/switch.cfg"
+  - "{{ bsd_nagios_conf_objects }}/templates.cfg"
+  - "{{ bsd_nagios_conf_objects }}/timeperiods.cfg"
+  - "{{ bsd_nagios_conf_objects }}/windows.cfg"
+
+# EOF
+...

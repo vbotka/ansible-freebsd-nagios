@@ -1,0 +1,6 @@
+---
+# configuration cfg_dir in nagions.cfg
+bsd_nagios_conf_cfg_dirs: []
+
+# EOF
+...

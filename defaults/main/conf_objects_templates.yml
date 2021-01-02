@@ -1,0 +1,6 @@
+---
+# TODO: defaults for sample
+bsd_nagios_conf_objects_templates: []
+
+# EOF
+...

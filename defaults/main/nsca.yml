@@ -1,0 +1,16 @@
+---
+# NSCA (Nagios Service Check Acceptor)
+# Linux/Unix daemon allows you to integrate passive alerts and checks
+# from remote machines and applications with Nagios. Useful for
+# processing security alerts, as well as redundant and distributed
+# Nagios setups.
+bsd_nsca_conf_recreate: false
+bsd_nsca_conf_files:
+  - "{{ bsd_nagios_conf_path }}/nsca.cfg"
+bsd_nsca_conf_options:
+  - file: "{{ bsd_nagios_conf_path }}/nsca.cfg"
+    conf:
+      - {key: "log_facility", val: "daemon", present: true}
+
+# EOF
+...

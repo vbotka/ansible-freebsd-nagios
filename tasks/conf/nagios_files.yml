@@ -12,7 +12,7 @@
   loop: "{{ bsd_nagios_conf_files }}"
   when: bsd_nagios_conf_recreate|bool
 
-- name: "conf:files: Create config files"
+- name: "conf:files: Create config files from samples"
   include_tasks: conf/create_file.yml
   loop: "{{ bsd_nagios_conf_files }}"
 

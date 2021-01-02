@@ -1,0 +1,66 @@
+---
+bsd_nagios_conf_objects_localhost:
+  - name: host
+    conf:
+      - {key: "use", val: "freebsd-server"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "alias", val: "localhost"}
+      - {key: "address", val: "127.0.0.1"}
+  - name: hostgroup
+    conf:
+      - {key: "hostgroup_name", val: "freebsd-servers"}
+      - {key: "alias", val: "FreeBSD Servers"}
+      - {key: "members", val: "localhost"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "PING"}
+      - {key: "check_command", val: "check_ping!100.0,20%!500.0,60%"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "Root Partition"}
+      - {key: "check_command", val: "check_local_disk!20%!10%!/"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "Current Users"}
+      - {key: "check_command", val: "check_local_users!20!50"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "Total Processes"}
+      - {key: "check_command", val: "check_local_procs!250!400!RSZDT"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "Current Load"}
+      - {key: "check_command", val: "check_local_load!5.0,4.0,3.0!10.0,6.0,4.0"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "Swap Usage"}
+      - {key: "check_command", val: "check_local_swap!20%!10%"}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "SSH"}
+      - {key: "check_command", val: "check_ssh"}
+      - {key: "notifications_enabled", val: 0}
+  - name: service
+    conf:
+      - {key: "use", val: "local-service"}
+      - {key: "host_name", val: "localhost"}
+      - {key: "service_description", val: "HTTP"}
+      - {key: "check_command", val: "check_http"}
+      - {key: "notifications_enabled", val: 0}
+
+# EOF
+...

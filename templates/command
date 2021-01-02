@@ -1,5 +1,1 @@
-define command {
-{% for option in item.1.conf %}
-	{{ option.key }} {{ option.val }}
-{% endfor %}
-}
+object-template.j2

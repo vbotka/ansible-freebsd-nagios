@@ -1,6 +1,5 @@
 ---
 
-# cfg_file in nagios.cfg
 - name: "conf:cfg_file: Debug"
   debug:
     var: bsd_nagios_conf_cfg_files
@@ -9,10 +8,12 @@
 - name: "conf:cfg_file: Configure options cfg_file in nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.cfg_file }}\s*$'
-    line: "cfg_file={{ item.cfg_file }}"
+    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$'
+    line: "cfg_file={{ item.file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
+  loop_control:
+    label: "{{ item.file }} {{ item.present|default(true)|bool }}"
   when: item.present|default(true)|bool
   notify:
     - verify nagios
@@ -21,14 +22,46 @@
 - name: "conf:cfg_file: Remove options cfg_file from nagios.cfg"
   lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.cfg_file }}\s*$'
-    line: "# cfg_file={{ item.cfg_file }}"
+    regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$'
+    line: "# cfg_file={{ item.file }}"
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
+  loop_control:
+    label: "{{ item.file }} {{ item.present|default(true)|bool }}"
   when: not item.present|default(true)|bool
   notify:
     - verify nagios
     - reload nagios
+
+- name: "conf:cfg_file: Configure nagios objects"
+  copy:
+    dest: "{{ item.file }}"
+    content: |
+      {% for object in item.objects %}
+      {% if object.state|default('present') == 'present' %}
+      define {{ object.name }} {
+      {% for option in object.conf %}
+              {{ option.key }} {{ option.val }}
+      {% endfor %}
+      }
+      {% endif %}
+
+      {% endfor %}
+
+    backup: "{{ bsd_nagios_backup_conf }}"
+  loop: "{{ bsd_nagios_conf_cfg_files }}"
+  loop_control:
+    label: "{{ item.file|dirname|basename }}
+            {{ item.file|basename }}
+            {{ item.present }}"
+  when: item.objects|length > 0
+  notify:
+    - verify nagios
+    - reload nagios
+
+# Note: Validate does not work. Optional path to config not available.
+# validate: "{{ bsd_nagios_program }} -v %s"
+# msg: 'failed to validate: rc:1 error:'
 
 # EOF
 ...

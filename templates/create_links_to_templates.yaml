@@ -1,0 +1,37 @@
+---
+
+# Run this playbook to create links to the templates
+
+- hosts: localhost
+  gather_facts: false
+  vars:
+    my_templates:
+      - template: object-template.j2
+        links:
+          - command
+          - contact
+          - contactgroup
+          - host
+          - hostdependency
+          - hostescalation
+          - hostextinfo
+          - hostgroup
+          - service
+          - servicedependency
+          - serviceescalation
+          - serviceextinfo
+          - servicegroup
+          - timeperiod
+  tasks:
+    - file:
+        state: link
+        src: "{{ item.0.template }}"
+        dest: "{{ item.1 }}"
+      with_subelements:
+        - "{{ my_templates }}"
+        - links
+      loop_control:
+        label: "{{ item.0.template }} {{ item.1 }}"
+
+# EOF
+...

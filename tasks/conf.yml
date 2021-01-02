@@ -1,24 +1,20 @@
 ---
 
 - name: "conf: Create config files from samples"
-  include_tasks: conf/nagios_files.yml
+  import_tasks: conf/nagios_files.yml
   tags: bsd_nagios_conf_files
 
 - name: "conf: Configure options"
-  include_tasks: conf/nagios_options.yml
+  import_tasks: conf/nagios_options.yml
   tags: bsd_nagios_conf_options
 
 - name: "conf: Configure cfg_file in nagios.cfg"
-  include_tasks: conf/nagios_cfg_file.yml
+  import_tasks: conf/nagios_cfg_file.yml
   tags: bsd_nagios_conf_cfg_file
 
 - name: "conf: Configure cfg_dir in nagios.cfg"
-  include_tasks: conf/nagios_cfg_dir.yml
+  import_tasks: conf/nagios_cfg_dir.yml
   tags: bsd_nagios_conf_cfg_dir
-
-- name: "conf: Create files wiht objects in cfg_dir"
-  include_tasks: conf/nagios_dir_objects.yml
-  tags: bsd_nagios_conf_dir_objects
 
 # EOF
 ...
