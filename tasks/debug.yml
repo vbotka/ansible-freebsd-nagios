@@ -60,6 +60,10 @@
          bsd_nagios_objects
          {{ bsd_nagios_objects|to_yaml }}
 
+         bsd_nagios_community_general [{{ bsd_nagios_community_general }}]
+         bsd_nagios_actions
+         {{ bsd_nagios_actions|to_yaml }}
+
          bsd_nsca_enable [{{ bsd_nsca_enable }}]
          bsd_nsca_service [{{ bsd_nsca_service }}]
          bsd_nsca_rcconf

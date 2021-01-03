@@ -21,6 +21,10 @@
 - import_tasks: rcconf.yml
   tags: bsd_nagios_rcconf
 
+- include_tasks: actions.yml
+  when: bsd_nagios_community_general|bool
+  tags: bsd_nagios_actions
+
 - import_tasks: audit.yml
   when: bsd_nagios_audit|bool
   tags: bsd_nagios_audit

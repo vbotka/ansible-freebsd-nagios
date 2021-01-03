@@ -1,0 +1,36 @@
+---
+
+- name: "actions: Debug"
+  debug:
+    var: bsd_nagios_actions
+  when: bsd_nagios_debug|bool
+  tags: bsd_nagios_actions
+
+- name: "actions: Nagios downtime and notifications"
+  community.general.nagios:
+    action: "{{ item.action }}"
+    author: "{{ item.author|default(omit) }}"
+    cmdfile: "{{ item.cmdfile|default(omit) }}"
+    command: "{{ item.command|default(omit) }}"
+    comment: "{{ item.comment|default(omit) }}"
+    host: "{{ item.host|default(omit) }}"
+    minutes: "{{ item.minutes|default(omit) }}"
+    servicegroup: "{{ item.servicegroup|default(omit) }}"
+    services: "{{ item.services|default(omit) }}"
+    start: "{{ item.start|default(omit) }}"
+  register: result
+  loop: "{{ bsd_nagios_actions }}"
+  loop_control:
+    label: "{{ item.action }}
+            {{ item.host|default('nohost') }}
+            {{ item.command|default('nocommand') }}"
+  tags: bsd_nagios_actions
+
+- name: "actions: Debug"
+  debug:
+    var: result
+  when: bsd_nagios_debug|bool
+  tags: bsd_nagios_actions
+
+# EOF
+...

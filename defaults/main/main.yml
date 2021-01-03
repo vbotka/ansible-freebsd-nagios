@@ -38,5 +38,9 @@ bsd_nagios_objects: []
 bsd_nagios_objects_dir: "{{ role_path }}/files/nagios-objects.d"
 bsd_nagios_objects_dir_extension: conf
 
+# actions
+bsd_nagios_community_general: false
+bsd_nagios_actions: []
+
 # EOF
 ...
