@@ -18,9 +18,7 @@
 
 [Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
 
-Feel free to [share your feedback and report
-issues](https://github.com/vbotka/ansible-freebsd-nagios/issues). Contributions
-are welcome.
+Feel free to [share your feedback and report issues](https://github.com/vbotka/ansible-freebsd-nagios/issues). Contributions are welcome.
 
 
 ## <a name="Requirements"></a>Requirements
