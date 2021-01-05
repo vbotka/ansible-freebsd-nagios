@@ -11,7 +11,7 @@
 * [Workflow](#Workflow)
 * [References](#References)
 * [License](#License)
-* [Author Information](#Author Information)
+* [Author Information](#Author-Information)
 
 
 ## <a name="Introduction"></a>Introduction
@@ -137,6 +137,6 @@ shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 [![license](https://img.shields.io/badge/license-BSD-red.svg)](https://www.freebsd.org/doc/en/articles/bsdl-gpl/article.html)
 
 
-## <a name="Author Information"></a>Author Information
+## <a name="Author-Information"></a>Author Information
 
 [Vladimir Botka](https://botka.link)
