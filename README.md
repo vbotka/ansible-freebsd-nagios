@@ -1,27 +1,41 @@
-## freebsd_nagios
+# freebsd_nagios
 
 [![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
+
+
+## Table of Contents
+* [Introduction](#Introduction)
+* [Requirements](#Requirements)
+* [Recommended](#Recommended)
+* [Variables](#Variables)
+* [Workflow](#Workflow)
+* [References](#References)
+* [License](#License)
+* [Author Information](#Author Information)
+
+
+## <a name="Introduction"></a>Introduction
 
 [Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
 
 
-# Requirements
+## <a name="Requirements"></a>Requirements
 
 No requiremenst.
 
 
-# Recommended
+## <a name="Recommended"></a>Recommended
 
 - [Apache](https://galaxy.ansible.com/vbotka/apache/)
 - [Certificate](https://galaxy.ansible.com/vbotka/certificate/)
 
 
-# Variables
+## <a name="Variables"></a>Variables
 
 Review the defaults and examples in vars.
 
 
-# Workflow
+## <a name="Workflow"></a>Workflow
 
 1) Change shell to /bin/sh
 
@@ -110,7 +124,7 @@ apache_httpd_conf_modules:
 shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 ```
 
-# References
+## <a name="References"></a>References
 
 - [Nagios Documentation](https://assets.nagios.com/downloads/nagioscore/docs/)
 - [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
@@ -118,11 +132,11 @@ shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 - [Apache HowTo: Access Control](https://httpd.apache.org/docs/2.4/howto/access.html)
 
 
-# License
+## <a name="License"></a>License
 
 [![license](https://img.shields.io/badge/license-BSD-red.svg)](https://www.freebsd.org/doc/en/articles/bsdl-gpl/article.html)
 
 
-# Author Information
+## <a name="Author Information"></a>Author Information
 
 [Vladimir Botka](https://botka.link)
