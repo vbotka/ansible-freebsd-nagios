@@ -18,6 +18,10 @@
 
 [Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
 
+Feel free to [share your feedback and report
+issues](https://github.com/vbotka/ansible-freebsd-nagios/issues). Contributions
+are welcome.
+
 
 ## <a name="Requirements"></a>Requirements
 
@@ -123,6 +127,7 @@ apache_httpd_conf_modules:
 ```
 shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 ```
+
 
 ## <a name="References"></a>References
 
