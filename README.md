@@ -1,6 +1,6 @@
 # freebsd_nagios
 
-[![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
+[![quality](https://img.shields.io/ansible/quality/27910)](https://galaxy.ansible.com/vbotka/freebsd_nagios)[![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
 
 
 ## Table of Contents
@@ -18,7 +18,9 @@
 
 [Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
 
-Feel free to [share your feedback and report issues](https://github.com/vbotka/ansible-freebsd-nagios/issues). Contributions are welcome.
+Feel free to [share your feedback and report issues](https://github.com/vbotka/ansible-freebsd-nagios/issues).
+
+[Contributions are welcome](https://github.com/firstcontributions/first-contributions).
 
 
 ## <a name="Requirements"></a>Requirements
