@@ -20,4 +20,6 @@ galaxy_info:
     - nsca
     - nrpe
 dependencies: []
+collections:
+  - community.general
 ...

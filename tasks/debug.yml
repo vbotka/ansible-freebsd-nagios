@@ -2,7 +2,7 @@
 
 - name: "Nagios Debug"
   vars:
-    msg: |
+    msg: |-
          ansible_architecture [{{ ansible_architecture }}]
          ansible_os_family [{{ ansible_os_family }}]
          ansible_distribution [{{ ansible_distribution }}]
@@ -60,7 +60,6 @@
          bsd_nagios_objects
          {{ bsd_nagios_objects|to_yaml }}
 
-         bsd_nagios_community_general [{{ bsd_nagios_community_general }}]
          bsd_nagios_actions
          {{ bsd_nagios_actions|to_yaml }}
 
@@ -83,7 +82,7 @@
          {{ bsd_nrpe_conf_files|to_nice_yaml }}
          bsd_nrpe_conf_options
          {{ bsd_nrpe_conf_options|to_yaml }}
-  debug:
+  ansible.builtin.debug:
     msg: "{{ msg.split('\n') }}"
 
 # EOF

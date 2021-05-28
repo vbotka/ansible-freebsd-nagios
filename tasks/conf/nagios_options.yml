@@ -1,12 +1,12 @@
 ---
 
 - name: "conf:options: Debug"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_conf_options
   when: bsd_nagios_debug|bool
 
 - name: "conf:options: Configure options"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: '^\s*#*\s*{{ item.1.key }}'
     line: "{{ item.1.key }}={{ item.1.val }}"
@@ -20,7 +20,7 @@
     - reload nagios
 
 - name: "conf:options: Remove options"
-  lineinfile:
+  ansible.builtin.lineinfile:
     backrefs: true
     dest: "{{ item.0.file }}"
     regexp: '^\s*#*\s*{{ item.1.key }}(.*)$'

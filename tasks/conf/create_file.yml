@@ -1,17 +1,21 @@
 ---
 
 - name: "conf:create_file: Stat {{ item }}"
-  stat:
+  ansible.builtin.stat:
     path: "{{ item }}"
   register: conf_file
 
 - block:
     - name: "conf:create_file: Stat {{ item }}{{ bsd_nagios_conf_sample }}"
-      stat:
+      ansible.builtin.stat:
         path: "{{ item }}{{ bsd_nagios_conf_sample }}"
       register: conf_file_sample
+    - name: "conf:create_file: Debug stat {{ item }}{{ bsd_nagios_conf_sample }}"
+      ansible.builtin.debug:
+        var: conf_file_sample
+      when: bsd_nagios_debug|bool
     - name: "conf:create_file: Create {{ item }}"
-      copy:
+      ansible.builtin.copy:
         remote_src: True
         src: "{{ item }}{{ bsd_nagios_conf_sample }}"
         dest: "{{ item }}"

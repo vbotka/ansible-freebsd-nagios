@@ -25,7 +25,14 @@ Feel free to [share your feedback and report issues](https://github.com/vbotka/a
 
 ## <a name="Requirements"></a>Requirements
 
-No requiremenst.
+### Collections
+
+- community.general
+
+### Recommended
+
+- Role [vbotka.certificate](https://galaxy.ansible.com/vbotka/certificate/)
+- Role [vbotka.apache](https://galaxy.ansible.com/vbotka/apache/)
 
 
 ## <a name="Recommended"></a>Recommended
@@ -47,13 +54,14 @@ Review the defaults and examples in vars.
 shell> ansible host -e 'ansible_shell_type=csh ansible_shell_executable=/bin/csh' -a 'sudo pw usermod admin -s /bin/sh'
 ```
 
-2) Install role
+2) Install the role and collections
 
 ```
-shell> ansible-galaxy install vbotka.freebsd_nagios
+shell> ansible-galaxy role install vbotka.freebsd_nagios
+shell> ansible-galaxy collection install community.general
 ```
 
-3) Fit variables
+3) Fit variables, e.g. in vars/main.yml
 
 ```
 shell> editor vbotka.freebsd_nagios/vars/main.yml

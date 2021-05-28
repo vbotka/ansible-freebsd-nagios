@@ -1,7 +1,7 @@
 ---
 
 - name: "audit: Not implemented."
-  debug:
+  ansible.builtin.debug:
     msg: Not implemeted yet.
 
 # TODO: Security Considerations
