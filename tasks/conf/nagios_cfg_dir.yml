@@ -2,19 +2,19 @@
 
 # cfg_dir in nagios.cfg
 - name: "conf:cfg_dir: Debug"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_dirs
   when: bsd_nagios_debug|bool
 
 - name: "conf:cfg_dir: Create cfg_dir"
-  file:
+  ansible.builtin.file:
     state: directory
     path: "{{ item.cfg_dir }}"
   loop: "{{ bsd_nagios_conf_cfg_dirs }}"
   when: item.present|default(true)|bool
 
 - name: "conf:cfg_dir: Configure options cfg_dir in nagios.cfg"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: '^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$'
     line: "cfg_dir={{ item.cfg_dir }}"
@@ -26,7 +26,7 @@
     - reload nagios
 
 - name: "conf:cfg_dir: Remove options cfg_dir from nagios.cfg"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: '^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$'
     line: "# cfg_dir={{ item.cfg_dir }}"
@@ -39,14 +39,14 @@
 
 # Read objects from files in directory bsd_nagios_objects_dir
 - name: "conf:cfg_dir: Find files in {{ bsd_nagios_objects_dir }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ bsd_nagios_objects_dir }}"
     patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
   delegate_to: localhost
   register: result
 
 - name: "conf:cfg_dir: List files in {{ bsd_nagios_objects_dir }}"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ result|json_query('files[].path') }}"
   when: bsd_nagios_debug|bool
 
@@ -55,13 +55,13 @@
   loop: "{{ result|json_query('files[].path') }}"
 
 - name: "conf:cfg_dir: List objects in bsd_nagios_objects"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_objects
   when: bsd_nagios_debug|bool
 
 # Configure objects from variable bsd_nagios_objects
 - name: "conf:cfg_dir: Configure nagios objects"
-  blockinfile:
+  ansible.builtin.blockinfile:
     dest: "{{ item.0.file }}"
     marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
     state: "{{ item.1.state|default('present') }}"

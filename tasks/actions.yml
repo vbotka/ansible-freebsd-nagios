@@ -1,10 +1,9 @@
 ---
 
 - name: "actions: Debug"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_actions
   when: bsd_nagios_debug|bool
-  tags: bsd_nagios_actions
 
 - name: "actions: Nagios downtime and notifications"
   community.general.nagios:
@@ -24,13 +23,11 @@
     label: "{{ item.action }}
             {{ item.host|default('nohost') }}
             {{ item.command|default('nocommand') }}"
-  tags: bsd_nagios_actions
 
 - name: "actions: Debug"
-  debug:
+  ansible.builtin.debug:
     var: result
   when: bsd_nagios_debug|bool
-  tags: bsd_nagios_actions
 
 # EOF
 ...

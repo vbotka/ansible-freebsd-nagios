@@ -1,12 +1,12 @@
 ---
 
 - name: "conf:files: Debug"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_conf_files
   when: bsd_nagios_debug|bool
 
 - name: "conf:files: Remove config files"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nagios_conf_files }}"

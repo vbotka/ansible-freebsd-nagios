@@ -1,7 +1,7 @@
 ---
 
 - name: "nsca: Remove config files"
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nsca_conf_files }}"
@@ -12,7 +12,7 @@
   loop: "{{ bsd_nsca_conf_files }}"
 
 - name: "nsca: Configure nsca"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: '^\s*#*\s*{{ item.1.key }}'
     line: "{{ item.1.key }}={{ item.1.val }}"
@@ -24,7 +24,7 @@
   notify: reload nsca
 
 - name: "conf:nsca: Remove nsca configuration items"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: '^\s*#*\s*{{ item.1.key }}(.*)$'
     line: '# {{ item.1.key }}\g<1>'

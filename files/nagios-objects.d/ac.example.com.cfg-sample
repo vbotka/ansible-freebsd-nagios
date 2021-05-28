@@ -6,31 +6,31 @@ objects:
         name: ac.example.com
         state: present
         conf:
-          - { key: "use", val: "freebsd-server" }
-          - { key: "host_name", val: "ac.example.com" }
-          - { key: "alias", val: "ac" }
-          - { key: "address", val: "192.168.99.1" }
+          - {key: "use", val: "freebsd-server"}
+          - {key: "host_name", val: "ac.example.com"}
+          - {key: "alias", val: "ac"}
+          - {key: "address", val: "192.168.99.1"}
       - template: service
         name: PING
         state: present
         conf:
-          - { key: "use", val: "generic-service" }
-          - { key: "host_name", val: "ac.example.com" }
-          - { key: "service_description", val: "PING" }
-          - { key: "check_command", val: "check_ping!100.0,20%!500.0,60%" }
+          - {key: "use", val: "generic-service"}
+          - {key: "host_name", val: "ac.example.com"}
+          - {key: "service_description", val: "PING"}
+          - {key: "check_command", val: "check_ping!100.0,20%!500.0,60%"}
       - template: service
         name: SSH
         state: present
         conf:
-          - { key: "use", val: "generic-service" }
-          - { key: "host_name", val: "ac.example.com" }
-          - { key: "service_description", val: "SSH" }
-          - { key: "check_command", val: "check_ssh" }
+          - {key: "use", val: "generic-service"}
+          - {key: "host_name", val: "ac.example.com"}
+          - {key: "service_description", val: "SSH"}
+          - {key: "check_command", val: "check_ssh"}
       - template: service
         name: HTTP
         state: present
         conf:
-          - { key: "use", val: "generic-service" }
-          - { key: "host_name", val: "ac.example.com" }
-          - { key: "service_description", val: "HTTP" }
-          - { key: "check_command", val: "check_http" }
+          - {key: "use", val: "generic-service"}
+          - {key: "host_name", val: "ac.example.com"}
+          - {key: "service_description", val: "HTTP"}
+          - {key: "check_command", val: "check_http"}

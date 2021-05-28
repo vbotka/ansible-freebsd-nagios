@@ -1,12 +1,12 @@
 ---
 
 - name: "conf:cfg_file: Debug"
-  debug:
+  ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_files
   when: bsd_nagios_debug|bool
 
 - name: "conf:cfg_file: Configure options cfg_file in nagios.cfg"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$'
     line: "cfg_file={{ item.file }}"
@@ -20,7 +20,7 @@
     - reload nagios
 
 - name: "conf:cfg_file: Remove options cfg_file from nagios.cfg"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: '^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$'
     line: "# cfg_file={{ item.file }}"
@@ -34,7 +34,7 @@
     - reload nagios
 
 - name: "conf:cfg_file: Configure nagios objects"
-  copy:
+  ansible.builtin.copy:
     dest: "{{ item.file }}"
     content: |
       {% for object in item.objects %}
