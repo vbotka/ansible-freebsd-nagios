@@ -2,38 +2,39 @@
 # nagios handlers freebsd_nagios
 
 - name: enable and start nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: started
     enabled: true
 
 - name: disable and stop nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: stopped
     enabled: false
 
 - name: start nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: started
 
 - name: stop nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: stopped
 
 - name: restart nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: restarted
   when: bsd_nagios_enable|bool
 
 - name: verify nagios
-  command: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
+  ansible.builtin.command:
+    cmd: "{{ bsd_nagios_program }} -v {{ bsd_nagios_conf_path }}/nagios.cfg"
 
 - name: reload nagios
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: reloaded
   when: bsd_nagios_enable|bool

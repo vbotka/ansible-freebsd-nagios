@@ -13,7 +13,7 @@
   when: bsd_nagios_conf_recreate|bool
 
 - name: "conf:files: Create config files from samples"
-  include_tasks: conf/create_file.yml
+  ansible.builtin.include_tasks: conf/create_file.yml
   loop: "{{ bsd_nagios_conf_files }}"
 
 # EOF

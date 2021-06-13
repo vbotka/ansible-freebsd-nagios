@@ -1,30 +1,38 @@
 ---
 # tasks freebsd_nagios
 
-- import_tasks: debug.yml
+- name: Import debug.yml
+  ansible.builtin.import_tasks: debug.yml
   when: bsd_nagios_debug|bool
   tags: [bsd_nagios_debug, always]
 
-- import_tasks: packages.yml
+- name: Import packages.yml
+  ansible.builtin.import_tasks: packages.yml
   when: bsd_nagios_install|bool
   tags: bsd_nagios_packages
 
-- import_tasks: conf.yml
+- name: Import conf.yml
+  ansible.builtin.import_tasks: conf.yml
   tags: bsd_nagios_conf
 
-- import_tasks: nsca.yml
+- name: Import nsca.yml
+  ansible.builtin.import_tasks: nsca.yml
   tags: bsd_nagios_nsca
 
-- import_tasks: nrpe.yml
+- name: Import nrpe.yml
+  ansible.builtin.import_tasks: nrpe.yml
   tags: bsd_nagios_nrpe
 
-- import_tasks: rcconf.yml
+- name: Import rcconf.yml
+  ansible.builtin.import_tasks: rcconf.yml
   tags: bsd_nagios_rcconf
 
-- import_tasks: actions.yml
+- name: Import actions.yml
+  ansible.builtin.import_tasks: actions.yml
   tags: bsd_nagios_actions
 
-- import_tasks: audit.yml
+- name: Import audit.yml
+  ansible.builtin.import_tasks: audit.yml
   when: bsd_nagios_audit|bool
   tags: bsd_nagios_audit
 

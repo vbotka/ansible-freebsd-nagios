@@ -1,9 +1,14 @@
 ---
 # handlers freebsd_nagios
 
-- import_tasks: nagios.yml
-- import_tasks: nsca.yml
-- import_tasks: nrpe.yml
+- name: Import nagios.yml
+  ansible.builtin.import_tasks: nagios.yml
+
+- name: Import nsca.yml
+  ansible.builtin.import_tasks: nsca.yml
+
+- name: Import nrpe.yml
+  ansible.builtin.import_tasks: nrpe.yml
 
 # EOF
 ...

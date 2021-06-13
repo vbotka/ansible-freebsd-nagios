@@ -8,7 +8,7 @@
   when: bsd_nsca_conf_recreate|bool
 
 - name: "nsca: Create config files"
-  include_tasks: conf/create_file.yml
+  ansible.builtin.include_tasks: conf/create_file.yml
   loop: "{{ bsd_nsca_conf_files }}"
 
 - name: "nsca: Configure nsca"

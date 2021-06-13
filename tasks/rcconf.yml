@@ -1,8 +1,13 @@
 ---
 
-- import_tasks: rcconf/nagios.yml
-- import_tasks: rcconf/nsca.yml
-- import_tasks: rcconf/nrpe.yml
+- name: Import rcconf/nagios.yml
+  ansible.builtin.import_tasks: rcconf/nagios.yml
+
+- name: Import rcconf/nsca.yml
+  ansible.builtin.import_tasks: rcconf/nsca.yml
+
+- name: Import rcconf/nrpe.yml
+  ansible.builtin.import_tasks: rcconf/nrpe.yml
 
 # EOF
 ...
