@@ -1,5 +1,5 @@
 ---
-# vars freebsd_nagios
+# vars samples freebsd_nagios
 
 # bsd_nagios_cfg_dirs:
 #  - { cfg_dir: "{{ bsd_nagios_conf_path }}/servers", present: true }

@@ -1,7 +1,7 @@
 ---
 
 - name: "rcconf:nsca: Enable and start {{ bsd_nsca_service }}"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: '^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$'
     line: '{{ bsd_nsca_service }}_enable="YES"'
@@ -10,7 +10,7 @@
   when: bsd_nsca_enable
 
 - name: "rcconf:nsca: Disable and stop {{ bsd_nsca_service }}"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: '^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$'
     line: '{{ bsd_nsca_service }}_enable="NO"'
@@ -19,7 +19,7 @@
   when: not bsd_nsca_enable
 
 - name: "rcconf:nsca: Configure nsca in /etc/rc.conf"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: '^\s*{{ item.key }}\s*=(.*)$'
     line: '{{ item.key }}="{{ item.val }}"'

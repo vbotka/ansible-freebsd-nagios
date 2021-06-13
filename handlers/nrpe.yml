@@ -2,35 +2,35 @@
 # nrpe handlers freebsd_nagios
 
 - name: enable and start nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: started
     enabled: true
 
 - name: disable and stop nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: stopped
     enabled: false
 
 - name: start nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: started
 
 - name: stop nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: stopped
 
 - name: restart nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: restarted
   when: bsd_nrpe_enable|bool
 
 - name: reload nrpe
-  service:
+  ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: reloaded
   when: bsd_nrpe_enable|bool

@@ -19,7 +19,7 @@
         remote_src: True
         src: "{{ item }}{{ bsd_nagios_conf_sample }}"
         dest: "{{ item }}"
-        owner:  "{{ conf_file_sample.stat.pw_name }}"
+        owner: "{{ conf_file_sample.stat.pw_name }}"
         group: "{{ conf_file_sample.stat.gr_name }}"
         mode: preserve
   when: not conf_file.stat.exists

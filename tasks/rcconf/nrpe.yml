@@ -10,7 +10,7 @@
   when: bsd_nrpe_enable
 
 - name: "rcconf:nrpe: Disable and stop {{ bsd_nrpe_service }}"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: '^\s*{{ bsd_nrpe_service }}_enable\s*=(.*)$'
     line: '{{ bsd_nrpe_service }}_enable="NO"'
@@ -19,7 +19,7 @@
   when: not bsd_nrpe_enable
 
 - name: "rcconf:nrpe: Configure nrpe in /etc/rc.conf"
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: '^\s*{{ item.key }}\s*=(.*)$'
     line: '{{ item.key }}="{{ item.val }}"'

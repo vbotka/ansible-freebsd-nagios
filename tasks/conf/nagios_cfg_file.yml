@@ -36,6 +36,7 @@
 - name: "conf:cfg_file: Configure nagios objects"
   ansible.builtin.copy:
     dest: "{{ item.file }}"
+    mode: "{{ item.mode|default(omit) }}"
     content: |
       {% for object in item.objects %}
       {% if object.state|default('present') == 'present' %}

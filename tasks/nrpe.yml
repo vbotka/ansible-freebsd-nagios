@@ -8,7 +8,7 @@
   when: bsd_nrpe_conf_recreate|bool
 
 - name: "nrpe: Create config files"
-  include_tasks: conf/create_file.yml
+  ansible.builtin.include_tasks: conf/create_file.yml
   loop: "{{ bsd_nrpe_conf_files }}"
   vars:
     bsd_nagios_conf_sample: ".sample"

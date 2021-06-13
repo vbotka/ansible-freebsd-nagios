@@ -10,6 +10,7 @@
   ansible.builtin.file:
     state: directory
     path: "{{ item.cfg_dir }}"
+    mode: "0755"
   loop: "{{ bsd_nagios_conf_cfg_dirs }}"
   when: item.present|default(true)|bool
 
@@ -51,7 +52,7 @@
   when: bsd_nagios_debug|bool
 
 - name: "conf:cfg_dir: Read vars"
-  include_tasks: conf/nagios_vars.yml
+  ansible.builtin.include_tasks: conf/nagios_vars.yml
   loop: "{{ result|json_query('files[].path') }}"
 
 - name: "conf:cfg_dir: List objects in bsd_nagios_objects"
@@ -63,6 +64,7 @@
 - name: "conf:cfg_dir: Configure nagios objects"
   ansible.builtin.blockinfile:
     dest: "{{ item.0.file }}"
+    mode: "{{ item.0.mode|default(omit) }}"
     marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
     state: "{{ item.1.state|default('present') }}"
     block: "{{ lookup('template', item.1.template) }}"
