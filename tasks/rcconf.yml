@@ -5,9 +5,11 @@
 
 - name: Import rcconf/nsca.yml
   ansible.builtin.import_tasks: rcconf/nsca.yml
+  when: bsd_nsca_conf_recreate|bool
 
 - name: Import rcconf/nrpe.yml
   ansible.builtin.import_tasks: rcconf/nrpe.yml
+  when: bsd_nrpe_conf_recreate|bool
 
 # EOF
 ...

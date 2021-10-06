@@ -6,22 +6,26 @@
     name: "{{ bsd_nsca_service }}"
     state: started
     enabled: true
+  when: bsd_nsca_enable|bool
 
 - name: disable and stop nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: stopped
     enabled: false
+  when: bsd_nsca_enable|bool
 
 - name: start nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: started
+  when: bsd_nsca_enable|bool
 
 - name: stop nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: stopped
+  when: bsd_nsca_enable|bool
 
 - name: restart nsca
   ansible.builtin.service:

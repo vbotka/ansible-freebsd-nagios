@@ -6,22 +6,26 @@
     name: "{{ bsd_nrpe_service }}"
     state: started
     enabled: true
+  when: bsd_nrpe_enable|bool
 
 - name: disable and stop nrpe
   ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: stopped
     enabled: false
+  when: bsd_nrpe_enable|bool
 
 - name: start nrpe
   ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: started
+  when: bsd_nrpe_enable|bool
 
 - name: stop nrpe
   ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: stopped
+  when: bsd_nrpe_enable|bool
 
 - name: restart nrpe
   ansible.builtin.service:
