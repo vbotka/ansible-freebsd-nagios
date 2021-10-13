@@ -1,6 +1,6 @@
 ---
 
-- name: "Nagios Debug"
+- name: Nagios Debug
   vars:
     msg: |-
          ansible_architecture [{{ ansible_architecture }}]
@@ -83,7 +83,7 @@
          bsd_nrpe_conf_options
          {{ bsd_nrpe_conf_options|to_yaml }}
   ansible.builtin.debug:
-    msg: "{{ msg.split('\n') }}"
+    msg: "{{ '{}'.format(msg) }}"
 
 # EOF
 ...
