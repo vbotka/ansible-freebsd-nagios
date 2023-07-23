@@ -152,4 +152,4 @@ shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
 
 ## <a name="Author-Information"></a>Author Information
 
-[Vladimir Botka](https://botka.link)
+[Vladimir Botka](https://botka.info)
