@@ -10,34 +10,34 @@
 #        name: srv-001.example.com
 #        state: present
 #        conf:
-#          - {key: "use", val: "freebsd-server"}
-#          - {key: "host_name", val: "srv-001.example.com"}
-#          - {key: "alias", val: "srv-001"}
-#          - {key: "address", val: "10.1.0.10"}
+#          - {key: 'use', val: 'freebsd-server'}
+#          - {key: 'host_name', val: 'srv-001.example.com'}
+#          - {key: 'alias', val: 'srv-001'}
+#          - {key: 'address', val: '10.1.0.10'}
 #      - template: service
 #        name: PING
 #        state: present
 #        conf:
-#          - {key: "use", val: "generic-service"}
-#          - {key: "host_name", val: "srv-001.example.com"}
-#          - {key: "service_description", val: "PING"}
-#          - {key: "check_command", val: "check_ping!100.0,20%!500.0,60%"}
+#          - {key: 'use', val: 'generic-service'}
+#          - {key: 'host_name', val: 'srv-001.example.com'}
+#          - {key: 'service_description', val: 'PING'}
+#          - {key: 'check_command', val: 'check_ping!100.0,20%!500.0,60%'}
 #      - template: service
 #        name: SSH
 #        state: present
 #        conf:
-#          - {key: "use", val: "generic-service"}
-#          - {key: "host_name", val: "srv-001.example.com"}
-#          - {key: "service_description", val: "SSH"}
-#          - {key: "check_command", val: "check_ssh"}
+#          - {key: 'use', val: 'generic-service'}
+#          - {key: 'host_name', val: 'srv-001.example.com'}
+#          - {key: 'service_description', val: 'SSH'}
+#          - {key: 'check_command', val: 'check_ssh'}
 #      - template: service
 #        name: HTTP
 #        state: present
 #        conf:
-#          - {key: "use", val: "generic-service"}
-#          - {key: "host_name", val: "srv-001.example.com"}
-#          - {key: "service_description", val: "HTTP"}
-#          - {key: "check_command", val: "check_http"}
+#          - {key: 'use', val: 'generic-service'}
+#          - {key: 'host_name', val: 'srv-001.example.com'}
+#          - {key: 'service_description', val: 'HTTP'}
+#          - {key: 'check_command', val: 'check_http'}
 
 # nsca
 # bsd_nsca_conf_recreate: false
@@ -46,17 +46,17 @@
 # bsd_nsca_conf_options:
 #   - file: "{{ bsd_nagios_conf_path }}/nsca.cfg"
 #     conf:
-#       - {key: "log_facility", val: "daemon", present: true}
+#       - {key: 'log_facility', val: 'daemon', present: true}
 
 # # nrpe
 # bsd_nrpe_conf_recreate: false
-# bsd_nrpe_conf_path: "/usr/local/etc"
+# bsd_nrpe_conf_path: '/usr/local/etc'
 # bsd_nrpe_conf_files:
 #   - "{{ bsd_nrpe_conf_path }}/nrpe.cfg"
 # bsd_nrpe_conf_options:
 #   - file: "{{ bsd_nrpe_conf_path }}/nrpe.cfg"
 #     conf:
-#       - {key: "log_facility", val: "daemon", present: true}
+#       - {key: 'log_facility', val: 'daemon', present: true}
 
 # EOF
 ...
