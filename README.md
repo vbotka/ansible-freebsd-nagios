@@ -88,7 +88,7 @@ certificate_self_signed:
      crt: 'nagios.example.com.crt'}
 ```
 
-6) Configure [Apache](https://galaxy.ansible.com/vbotka/apache/)
+### Configure [Apache](https://galaxy.ansible.com/vbotka/apache/)
 
 ```
 apache_vhost:
@@ -130,12 +130,59 @@ apache_httpd_conf_modules:
   - {module: 'cgid_module', mod: 'mod_cgid.so', present: true}
 ```
 
-7) Create password for nagiosadmin
+Install py39-htpasswd (Replacement for htpasswd)
 
 ```
-shell> htpasswd -c /usr/local/etc/nagios/htpasswd.users nagiosadmin
+shell> pkg install py39-htpasswd
 ```
 
+Create password for nagiosadmin
+
+```
+shell> htpasswd.py -b -c /usr/local/etc/nagios/htpasswd.users nagiosadmin ngadminpasswd
+```
+
+
+### Configure [Lighttpd](https://www.lighttpd.net/)
+
+TODO: [ansible-config-light](https://github.com/vbotka/ansible-config-light) install and configure *lighttpd*
+
+```
+shell> pwd
+/usr/local/etc/lighttpd
+
+shell> cat nagios.conf
+# BEGIN ANSIBLE MANAGED BLOCK alias.url
+alias.url =(
+    "/nagios/cgi-bin" => "/usr/local/www/nagios/cgi-bin",
+    "/nagios" => "/usr/local/www/nagios"
+    )
+# END ANSIBLE MANAGED BLOCK alias.url
+# BEGIN ANSIBLE MANAGED BLOCK cgi.assign
+$HTTP["url"] =~ "^/nagios/cgi-bin" {
+    cgi.assign += ( "" => "" )
+}
+# END ANSIBLE MANAGED BLOCK cgi.assign
+# BEGIN ANSIBLE MANAGED BLOCK auth
+$HTTP["url"] =~ "nagios" {
+    auth.backend = "plain"   # The password is stored as plain text as user:password
+    auth.backend.plain.userfile = "/usr/local/etc/nagios/passwd"
+    auth.require = ( "" => (
+        "method" => "basic",
+        "realm" => "nagios",
+        "require" => "user=nagiosadmin"
+        )
+    )
+}
+# END ANSIBLE MANAGED BLOCK auth
+```
+
+Create password for nagiosadmin
+
+```
+shell> cat /usr/local/etc/nagios/passwd
+nagiosadmin:ngadminpasswd
+```
 
 ## <a name="References"></a>References
 
