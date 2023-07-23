@@ -19,7 +19,7 @@ bsd_nagios_packages:
   - net-mgmt/nagios4
   - net-mgmt/nagios-plugins
   - net-mgmt/nsca
-  - net-mgmt/nrpe3
+  - net-mgmt/nrpe
 
 # rc.conf
 bsd_nagios_program: /usr/local/bin/nagios
