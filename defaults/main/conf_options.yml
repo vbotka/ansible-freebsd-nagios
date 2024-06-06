@@ -9,7 +9,7 @@ bsd_nagios_conf_options:
     conf:
       - {key: nagios_user, val: "{{ bsd_nagios_user }}", present: true}
       - {key: nagios_group, val: "{{ bsd_nagios_group }}", present: true}
-      - {key: log_file, val: "{{ bsd_nagios_log_file: }}", present: true}
+      - {key: log_file, val: "{{ bsd_nagios_log_file }}", present: true}
       - {key: check_result_path, val: "{{ bsd_nagios_check_result_path }}", present: true}
 
 # EOF
