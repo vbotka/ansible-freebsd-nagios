@@ -1,6 +1,6 @@
 ---
 
-- name: "package: Install Nagios packages."
+- name: "Pkg: Install Nagios packages."
   community.general.pkgng:
     name: "{{ bsd_nagios_packages }}"
   register: result
@@ -9,7 +9,7 @@
   delay: "{{ freebsd_install_delay }}"
   when: freebsd_install_method|lower == 'packages'
 
-- name: "packages: Install Nagios ports."
+- name: "Pkg: Install Nagios ports."
   community.general.portinstall:
     name: "{{ item }}"
     use_packages: "{{ freebsd_use_packages }}"
