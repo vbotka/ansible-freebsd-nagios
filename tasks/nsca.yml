@@ -1,39 +1,37 @@
 ---
-
-- name: "nsca: Remove config files"
+- name: "Nsca: Remove config files"
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nsca_conf_files }}"
-  when: bsd_nsca_conf_recreate|bool
+  when: bsd_nsca_conf_recreate | bool
 
-- name: "nsca: Create config files"
+- name: "Nsca: Create config files"
   ansible.builtin.include_tasks: conf/create_file.yml
   loop: "{{ bsd_nsca_conf_files }}"
 
-- name: "nsca: Configure nsca"
+- name: "Nsca: Configure nsca"
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: '^\s*#*\s*{{ item.1.key }}'
+    regexp: ^\s*#*\s*{{ item.1.key }}
     line: "{{ item.1.key }}={{ item.1.val }}"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nsca_conf_options|subelements('conf') }}"
+  loop: "{{ bsd_nsca_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
-  when: item.1.present|default(true)|bool
+  when: item.1.present | d(true) | bool
   notify: reload nsca
 
-- name: "conf:nsca: Remove nsca configuration items"
+- name: "Conf:nsca: Remove nsca configuration items"
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: '^\s*#*\s*{{ item.1.key }}(.*)$'
-    line: '# {{ item.1.key }}\g<1>'
+    regexp: ^\s*#*\s*{{ item.1.key }}(.*)$
+    line: "# {{ item.1.key }}\\g<1>"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nsca_conf_options|subelements('conf') }}"
+  loop: "{{ bsd_nsca_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}"
-  when: not item.1.present|default(true)|bool
+  when: not item.1.present | d(true) | bool
   notify: reload nsca
 
 # EOF
-...

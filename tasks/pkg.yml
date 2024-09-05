@@ -1,5 +1,4 @@
 ---
-
 - name: "Pkg: Install Nagios packages."
   community.general.pkgng:
     name: "{{ bsd_nagios_packages }}"
@@ -21,4 +20,3 @@
   when: freebsd_install_method|lower == 'ports'
 
 # EOF
-...

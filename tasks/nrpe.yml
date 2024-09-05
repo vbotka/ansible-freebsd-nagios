@@ -1,41 +1,39 @@
 ---
-
-- name: "nrpe: Remove config files"
+- name: "Nrpe: Remove config files"
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nrpe_conf_files }}"
-  when: bsd_nrpe_conf_recreate|bool
+  when: bsd_nrpe_conf_recreate | bool
 
-- name: "nrpe: Create config files"
+- name: "Nrpe: Create config files"
   ansible.builtin.include_tasks: conf/create_file.yml
   loop: "{{ bsd_nrpe_conf_files }}"
   vars:
-    bsd_nagios_conf_sample: ".sample"
+    bsd_nagios_conf_sample: .sample
 
-- name: "nrpe: Configure nrpe"
+- name: "Nrpe: Configure nrpe"
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: '^\s*#*\s*{{ item.1.key }}'
+    regexp: ^\s*#*\s*{{ item.1.key }}
     line: "{{ item.1.key }}={{ item.1.val }}"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
+  loop: "{{ bsd_nrpe_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
-  when: item.1.present|default(true)|bool
+  when: item.1.present | d(true) | bool
   notify: reload nrpe
 
-- name: "nrpe: Remove nrpe configuration items"
+- name: "Nrpe: Remove nrpe configuration items"
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
-    regexp: '^\s*#*\s*{{ item.1.key }}(.*)$'
-    line: '# {{ item.1.key }}\g<1>'
+    regexp: ^\s*#*\s*{{ item.1.key }}(.*)$
+    line: "# {{ item.1.key }}\\g<1>"
     backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nrpe_conf_options|subelements('conf') }}"
+  loop: "{{ bsd_nrpe_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}"
-  when: not item.1.present|default(true)|bool
+  when: not item.1.present | d(true) | bool
   notify: reload nrpe
 
 # EOF
-...

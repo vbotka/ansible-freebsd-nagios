@@ -1,20 +1,18 @@
 ---
-
-- name: "conf: Create config files from samples"
-  import_tasks: conf/nagios_files.yml
+- name: "Conf: Create config files from samples"
+  ansible.builtin.import_tasks: conf/nagios_files.yml
   tags: bsd_nagios_conf_files
 
-- name: "conf: Configure options"
-  import_tasks: conf/nagios_options.yml
+- name: "Conf: Configure options"
+  ansible.builtin.import_tasks: conf/nagios_options.yml
   tags: bsd_nagios_conf_options
 
-- name: "conf: Configure cfg_file in nagios.cfg"
-  import_tasks: conf/nagios_cfg_file.yml
+- name: "Conf: Configure cfg_file in nagios.cfg"
+  ansible.builtin.import_tasks: conf/nagios_cfg_file.yml
   tags: bsd_nagios_conf_cfg_file
 
-- name: "conf: Configure cfg_dir in nagios.cfg"
-  import_tasks: conf/nagios_cfg_dir.yml
+- name: "Conf: Configure cfg_dir in nagios.cfg"
+  ansible.builtin.import_tasks: conf/nagios_cfg_dir.yml
   tags: bsd_nagios_conf_cfg_dir
 
 # EOF
-...

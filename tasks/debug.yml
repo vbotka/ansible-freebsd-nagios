@@ -1,79 +1,77 @@
 ---
-
 - name: Nagios Debug
   vars:
     msg: |-
-         ansible_architecture: {{ ansible_architecture }}
-         ansible_os_family: {{ ansible_os_family }}
-         ansible_distribution: {{ ansible_distribution }}
-         ansible_distribution_major_version: {{ ansible_distribution_major_version }}
-         ansible_distribution_version: {{ ansible_distribution_version }}
-         ansible_distribution_release: {{ ansible_distribution_release }}
-         ansible_python_version: {{ ansible_python_version }}
+      ansible_architecture: {{ ansible_architecture }}
+      ansible_os_family: {{ ansible_os_family }}
+      ansible_distribution: {{ ansible_distribution }}
+      ansible_distribution_major_version: {{ ansible_distribution_major_version }}
+      ansible_distribution_version: {{ ansible_distribution_version }}
+      ansible_distribution_release: {{ ansible_distribution_release }}
+      ansible_python_version: {{ ansible_python_version }}
 
-         freebsd_install_method: {{ freebsd_install_method }}
-         freebsd_use_packages: {{ freebsd_use_packages }}
-         freebsd_install_retries: {{ freebsd_install_retries }}
-         freebsd_install_delay: {{ freebsd_install_delay }}
+      freebsd_install_method: {{ freebsd_install_method }}
+      freebsd_use_packages: {{ freebsd_use_packages }}
+      freebsd_install_retries: {{ freebsd_install_retries }}
+      freebsd_install_delay: {{ freebsd_install_delay }}
 
-         bsd_nagios_install: {{ bsd_nagios_install }}
-         bsd_nagios_packages:
-           {{ bsd_nagios_packages|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nagios_enable: {{ bsd_nagios_enable }}
-         bsd_nagios_backup_conf: {{ bsd_nagios_backup_conf }}
-         bsd_nagios_audit: {{ bsd_nagios_audit }}
-         bsd_nagios_service: {{ bsd_nagios_service }}
-         bsd_nagios_program: {{ bsd_nagios_program|default('UNDEFINED') }}
-         bsd_nagios_user: {{ bsd_nagios_user|default('UNDEFINED') }}
-         bsd_nagios_group: {{ bsd_nagios_grouip|default('UNDEFINED') }}
-         bsd_nagios_precache: {{ bsd_nagios_precache|default('UNDEFINED') }}
-         bsd_nagios_rcconf:
-           {{ bsd_nagios_rcconf|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nagios_conf_recreate: {{ bsd_nagios_conf_recreate }}
-         bsd_nagios_conf_owner: {{ bsd_nagios_conf_owner }}
-         bsd_nagios_conf_group: {{ bsd_nagios_conf_group }}
-         bsd_nagios_conf_path: {{ bsd_nagios_conf_path }}
-         bsd_nagios_conf_objects:
-           {{ bsd_nagios_conf_objects|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nagios_conf_sample: {{ bsd_nagios_conf_sample }}
-         bsd_nagios_conf_files:
-           {{ bsd_nagios_conf_files|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nagios_user: {{ bsd_nagios_user }}
-         bsd_nagios_group: {{ bsd_nagios_group }}
-         bsd_nagios_log_file: {{ bsd_nagios_log_file }}
-         bsd_nagios_check_result_path: {{ bsd_nagios_check_result_path }}
-         bsd_nagios_conf_options:
-           {{ bsd_nagios_conf_options|to_yaml(indent=2)|indent(2) }}
-         bsd_nagios_conf_cfg_files:
-           {{ bsd_nagios_conf_cfg_files|to_yaml(indent=2)|indent(2) }}
-         bsd_nagios_conf_cfg_dirs:
-           {{ bsd_nagios_conf_cfg_dirs|to_yaml(indent=2)|indent(2) }}
-         bsd_nagios_objects_dir: {{ bsd_nagios_objects_dir }}
-         bsd_nagios_objects_dir_extension: {{ bsd_nagios_objects_dir_extension }}
-         bsd_nagios_objects:
-           {{ bsd_nagios_objects|to_yaml(indent=2)|indent(2) }}
-         bsd_nagios_actions:
-           {{ bsd_nagios_actions|to_yaml(indent=2)|indent(2) }}
-         bsd_nsca_enable: {{ bsd_nsca_enable }}
-         bsd_nsca_service: {{ bsd_nsca_service }}
-         bsd_nsca_rcconf:
-           {{ bsd_nsca_rcconf|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nsca_conf_recreate: {{ bsd_nsca_conf_recreate }}
-         bsd_nsca_conf_files:
-           {{ bsd_nsca_conf_files|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nsca_conf_options:
-           {{ bsd_nsca_conf_options|to_yaml(indent=2)|indent(2) }}
-         bsd_nrpe_enable: {{ bsd_nrpe_enable }}
-         bsd_nrpe_service: {{ bsd_nrpe_service }}
-         bsd_nrpe_rcconf:
-           {{ bsd_nrpe_rcconf|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nrpe_conf_recreate: {{ bsd_nrpe_conf_recreate }}
-         bsd_nrpe_conf_files:
-           {{ bsd_nrpe_conf_files|to_nice_yaml(indent=2)|indent(2) }}
-         bsd_nrpe_conf_options:
-           {{ bsd_nrpe_conf_options|to_yaml(indent=2)|indent(2) }}
+      bsd_nagios_install: {{ bsd_nagios_install }}
+      bsd_nagios_packages:
+        {{ bsd_nagios_packages | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nagios_enable: {{ bsd_nagios_enable }}
+      bsd_nagios_backup_conf: {{ bsd_nagios_backup_conf }}
+      bsd_nagios_audit: {{ bsd_nagios_audit }}
+      bsd_nagios_service: {{ bsd_nagios_service }}
+      bsd_nagios_program: {{ bsd_nagios_program | default('UNDEFINED') }}
+      bsd_nagios_user: {{ bsd_nagios_user | default('UNDEFINED') }}
+      bsd_nagios_group: {{ bsd_nagios_grouip | default('UNDEFINED') }}
+      bsd_nagios_precache: {{ bsd_nagios_precache | default('UNDEFINED') }}
+      bsd_nagios_rcconf:
+        {{ bsd_nagios_rcconf | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nagios_conf_recreate: {{ bsd_nagios_conf_recreate }}
+      bsd_nagios_conf_owner: {{ bsd_nagios_conf_owner }}
+      bsd_nagios_conf_group: {{ bsd_nagios_conf_group }}
+      bsd_nagios_conf_path: {{ bsd_nagios_conf_path }}
+      bsd_nagios_conf_objects:
+        {{ bsd_nagios_conf_objects | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nagios_conf_sample: {{ bsd_nagios_conf_sample }}
+      bsd_nagios_conf_files:
+        {{ bsd_nagios_conf_files | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nagios_user: {{ bsd_nagios_user }}
+      bsd_nagios_group: {{ bsd_nagios_group }}
+      bsd_nagios_log_file: {{ bsd_nagios_log_file }}
+      bsd_nagios_check_result_path: {{ bsd_nagios_check_result_path }}
+      bsd_nagios_conf_options:
+        {{ bsd_nagios_conf_options | to_yaml(indent=2) | indent(2) }}
+      bsd_nagios_conf_cfg_files:
+        {{ bsd_nagios_conf_cfg_files | to_yaml(indent=2) | indent(2) }}
+      bsd_nagios_conf_cfg_dirs:
+        {{ bsd_nagios_conf_cfg_dirs | to_yaml(indent=2) | indent(2) }}
+      bsd_nagios_objects_dir: {{ bsd_nagios_objects_dir }}
+      bsd_nagios_objects_dir_extension: {{ bsd_nagios_objects_dir_extension }}
+      bsd_nagios_objects:
+        {{ bsd_nagios_objects | to_yaml(indent=2) | indent(2) }}
+      bsd_nagios_actions:
+        {{ bsd_nagios_actions | to_yaml(indent=2) | indent(2) }}
+      bsd_nsca_enable: {{ bsd_nsca_enable }}
+      bsd_nsca_service: {{ bsd_nsca_service }}
+      bsd_nsca_rcconf:
+        {{ bsd_nsca_rcconf | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nsca_conf_recreate: {{ bsd_nsca_conf_recreate }}
+      bsd_nsca_conf_files:
+        {{ bsd_nsca_conf_files | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nsca_conf_options:
+        {{ bsd_nsca_conf_options | to_yaml(indent=2) | indent(2) }}
+      bsd_nrpe_enable: {{ bsd_nrpe_enable }}
+      bsd_nrpe_service: {{ bsd_nrpe_service }}
+      bsd_nrpe_rcconf:
+        {{ bsd_nrpe_rcconf | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nrpe_conf_recreate: {{ bsd_nrpe_conf_recreate }}
+      bsd_nrpe_conf_files:
+        {{ bsd_nrpe_conf_files | to_nice_yaml(indent=2) | indent(2) }}
+      bsd_nrpe_conf_options:
+        {{ bsd_nrpe_conf_options | to_yaml(indent=2) | indent(2) }}
   ansible.builtin.debug:
     msg: "{{ '{}'.format(msg) }}"
 
 # EOF
-...

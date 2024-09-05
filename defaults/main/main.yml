@@ -29,7 +29,6 @@ bsd_nsca_service: nsca
 bsd_nsca_rcconf: []
 bsd_nrpe_service: nrpe
 bsd_nrpe_rcconf: []
-
 bsd_nagios_conf_owner: root
 bsd_nagios_conf_group: wheel
 
@@ -40,6 +39,3 @@ bsd_nagios_objects_dir_extension: conf
 
 # actions
 bsd_nagios_actions: []
-
-# EOF
-...
