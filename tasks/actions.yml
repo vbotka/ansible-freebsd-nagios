@@ -7,19 +7,19 @@
 - name: "Actions: Nagios downtime and notifications"
   community.general.nagios:
     action: "{{ item.action }}"
-    author: "{{ item.author | default(omit) }}"
-    cmdfile: "{{ item.cmdfile | default(omit) }}"
-    command: "{{ item.command | default(omit) }}"
-    comment: "{{ item.comment | default(omit) }}"
-    host: "{{ item.host | default(omit) }}"
-    minutes: "{{ item.minutes | default(omit) }}"
-    servicegroup: "{{ item.servicegroup | default(omit) }}"
-    services: "{{ item.services | default(omit) }}"
-    start: "{{ item.start | default(omit) }}"
+    author: "{{ item.author | d(omit) }}"
+    cmdfile: "{{ item.cmdfile | d(omit) }}"
+    command: "{{ item.command | d(omit) }}"
+    comment: "{{ item.comment | d(omit) }}"
+    host: "{{ item.host | d(omit) }}"
+    minutes: "{{ item.minutes | d(omit) }}"
+    servicegroup: "{{ item.servicegroup | d(omit) }}"
+    services: "{{ item.services | d(omit) }}"
+    start: "{{ item.start | d(omit) }}"
   register: result
   loop: "{{ bsd_nagios_actions }}"
   loop_control:
-    label: "{{ item.action }} {{ item.host | default('nohost') }} {{ item.command | default('nocommand') }}"
+    label: "{{ item.action }} {{ item.host | d('nohost') }} {{ item.command | d('nocommand') }}"
 
 - name: "Actions: Debug"
   ansible.builtin.debug:

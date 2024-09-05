@@ -23,6 +23,7 @@ Minor Changes
 * Update ansible-lint conf.
 * Fix ansible-lint errors and warnings.
 * Add changelog.
+* Globally replace filter default() with alias d()
 
 Bugfixes
 --------

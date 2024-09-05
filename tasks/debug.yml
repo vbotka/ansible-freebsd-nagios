@@ -22,10 +22,10 @@
       bsd_nagios_backup_conf: {{ bsd_nagios_backup_conf }}
       bsd_nagios_audit: {{ bsd_nagios_audit }}
       bsd_nagios_service: {{ bsd_nagios_service }}
-      bsd_nagios_program: {{ bsd_nagios_program | default('UNDEFINED') }}
-      bsd_nagios_user: {{ bsd_nagios_user | default('UNDEFINED') }}
-      bsd_nagios_group: {{ bsd_nagios_grouip | default('UNDEFINED') }}
-      bsd_nagios_precache: {{ bsd_nagios_precache | default('UNDEFINED') }}
+      bsd_nagios_program: {{ bsd_nagios_program | d('UNDEFINED') }}
+      bsd_nagios_user: {{ bsd_nagios_user | d('UNDEFINED') }}
+      bsd_nagios_group: {{ bsd_nagios_grouip | d('UNDEFINED') }}
+      bsd_nagios_precache: {{ bsd_nagios_precache | d('UNDEFINED') }}
       bsd_nagios_rcconf:
         {{ bsd_nagios_rcconf | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nagios_conf_recreate: {{ bsd_nagios_conf_recreate }}

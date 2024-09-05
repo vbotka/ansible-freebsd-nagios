@@ -12,8 +12,8 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
-    label: "{{ item.file }} {{ item.present | default(true) | bool }}"
-  when: item.present|default(true)|bool
+    label: "{{ item.file }} {{ item.present | d(true) | bool }}"
+  when: item.present|d(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -26,8 +26,8 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
-    label: "{{ item.file }} {{ item.present | default(true) | bool }}"
-  when: not item.present|default(true)|bool
+    label: "{{ item.file }} {{ item.present | d(true) | bool }}"
+  when: not item.present|d(true)|bool
   notify:
     - verify nagios
     - reload nagios
@@ -35,10 +35,10 @@
 - name: "Conf:cfg_file: Configure nagios objects"
   ansible.builtin.copy:
     dest: "{{ item.file }}"
-    mode: "{{ item.mode | default(omit) }}"
+    mode: "{{ item.mode | d(omit) }}"
     content: |
       {% for object in item.objects %}
-      {% if object.state | default('present') == 'present' %}
+      {% if object.state | d('present') == 'present' %}
       define {{ object.name }} {
       {% for option in object.conf %}
               {{ option.key }} {{ option.val }}

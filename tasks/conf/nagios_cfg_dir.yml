@@ -63,7 +63,7 @@
 - name: "Conf:cfg_dir: Configure nagios objects"
   ansible.builtin.blockinfile:
     dest: "{{ item.0.file }}"
-    mode: "{{ item.0.mode|default(omit) }}"
+    mode: "{{ item.0.mode|d(omit) }}"
     marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
     state: "{{ item.1.state | d('present') }}"
     block: "{{ lookup('template', item.1.template) }}"
