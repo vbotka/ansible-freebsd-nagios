@@ -69,6 +69,38 @@ shell> cat freebsd-nagios.yml
     - vbotka.freebsd_nagios
 ```
 
+Check syntax
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml --syntax-check
+```
+
+Display variables
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_debug -e bsd_nagios_debug=true
+```
+
+Install packages
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_pkg -e bsd_nagios_install=true
+```
+
+Create missing configuration files from samples
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files
+```
+
+Dry-run the play and see the potential differences
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml --check --diff
+```
+
+Run the play
+
 ```bash
 shell> ansible-playbook freebsd-nagios.yml
 ```
