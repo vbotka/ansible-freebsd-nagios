@@ -1,16 +1,7 @@
 ---
-- name: "Nrpe: Remove config files"
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: absent
-  loop: "{{ bsd_nrpe_conf_files }}"
-  when: bsd_nrpe_conf_recreate | bool
-
-- name: "Nrpe: Create config files"
-  ansible.builtin.include_tasks: conf/create_file.yml
-  loop: "{{ bsd_nrpe_conf_files }}"
-  vars:
-    bsd_nagios_conf_sample: .sample
+- name: "Nrpe: Create config files from samples"
+  ansible.builtin.import_tasks: conf/nrpe_files.yml
+  tags: bsd_nrpe_conf_files
 
 - name: "Nrpe: Configure nrpe"
   ansible.builtin.lineinfile:

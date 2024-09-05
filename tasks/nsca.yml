@@ -1,14 +1,7 @@
 ---
-- name: "Nsca: Remove config files"
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: absent
-  loop: "{{ bsd_nsca_conf_files }}"
-  when: bsd_nsca_conf_recreate | bool
-
-- name: "Nsca: Create config files"
-  ansible.builtin.include_tasks: conf/create_file.yml
-  loop: "{{ bsd_nsca_conf_files }}"
+- name: "Nsca: Create config files from samples"
+  ansible.builtin.import_tasks: conf/nsca_files.yml
+  tags: bsd_nsca_conf_files
 
 - name: "Nsca: Configure nsca"
   ansible.builtin.lineinfile:

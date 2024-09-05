@@ -90,7 +90,7 @@ shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_pkg -e bsd_nagios_insta
 Create missing configuration files from samples
 
 ```bash
-shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files,bsd_nsca_conf_files,bsd_nrpe_conf_files
 ```
 
 Dry-run the play and see the potential differences
