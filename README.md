@@ -40,7 +40,7 @@ Feel free to [share your feedback and report issues](https://github.com/vbotka/a
 
 ## <a name="Workflow"></a>Workflow
 
-1) Change the shell to /bin/sh if necessary
+1) Change the shell to /bin/sh on the remote host(s) if necessary
 
 ```bash
 shell> ansible host -e 'ansible_shell_type=csh ansible_shell_executable=/bin/csh' -a 'sudo pw usermod admin -s /bin/sh'
@@ -58,7 +58,14 @@ Install the collection if necessary
 shell> ansible-galaxy collection install community.general
 ```
 
-3) Fit variables to your needs. See examples in vars/main.yml.sample
+3) Fit variables to your needs. See examples in
+   vars/main.yml.sample. By default, all services are disabled
+
+```yaml
+bsd_nagios_enable: false
+bsd_nsca_enable: false
+bsd_nrpe_enable: false
+```
 
 4) Create and run the playbook
 
@@ -69,37 +76,49 @@ shell> cat freebsd-nagios.yml
     - vbotka.freebsd_nagios
 ```
 
-Check syntax
+* Check syntax
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml --syntax-check
 ```
 
-Display variables
+* Display variables
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_debug -e bsd_nagios_debug=true
 ```
 
-Install packages
+* Install packages. By default the installation of *nagios* is enabled
+  and installation of *nsca* and *nrpe* disabled. Fit the installation
+  to your needs
+
+```yaml
+bsd_nagios_install: true
+bsd_nsca_install: false
+bsd_nrpe_install: false
+```
+Optionally, override these variables on the command line
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_pkg -e bsd_nagios_install=true
 ```
 
-Create missing configuration files from samples
+After the installation set the variables *false* to speedup the configuration.
+
+* Create missing configuration files from samples. Trim the tags
+  according the installed packages if you want to
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files,bsd_nsca_conf_files,bsd_nrpe_conf_files
 ```
 
-Dry-run the play and see the potential differences
+* Dry-run the play and see the potential differences
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml --check --diff
 ```
 
-Run the play
+* Run the play
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml
