@@ -20,9 +20,9 @@
       bsd_nagios_packages:
         {{ bsd_nagios_packages | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nagios_enable: {{ bsd_nagios_enable }}
+      bsd_nagios_service: {{ bsd_nagios_service }}
       bsd_nagios_backup_conf: {{ bsd_nagios_backup_conf }}
       bsd_nagios_audit: {{ bsd_nagios_audit }}
-      bsd_nagios_service: {{ bsd_nagios_service }}
       bsd_nagios_program: {{ bsd_nagios_program | d('UNDEFINED') }}
       bsd_nagios_user: {{ bsd_nagios_user | d('UNDEFINED') }}
       bsd_nagios_group: {{ bsd_nagios_grouip | d('UNDEFINED') }}
@@ -54,6 +54,8 @@
         {{ bsd_nagios_objects | to_yaml(indent=2) | indent(2) }}
       bsd_nagios_actions:
         {{ bsd_nagios_actions | to_yaml(indent=2) | indent(2) }}
+      # nsca - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      bsd_nsca: {{ bsd_nsca }}
       bsd_nsca_install: {{ bsd_nsca_install }}
       bsd_nsca_packages:
         {{ bsd_nsca_packages | to_nice_yaml(indent=2) | indent(2) }}
@@ -66,6 +68,8 @@
         {{ bsd_nsca_conf_files | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nsca_conf_options:
         {{ bsd_nsca_conf_options | to_yaml(indent=2) | indent(2) }}
+      # nrpe - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      bsd_nrpe: {{ bsd_nrpe }}
       bsd_nrpe_install: {{ bsd_nrpe_install }}
       bsd_nrpe_packages:
         {{ bsd_nrpe_packages | to_nice_yaml(indent=2) | indent(2) }}

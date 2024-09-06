@@ -16,13 +16,13 @@
 
 - name: Import nsca.yml
   ansible.builtin.import_tasks: nsca.yml
-  when: bsd_nsca_install | bool
-  tags: bsd_nagios_nsca
+  when: bsd_nsca | bool
+  tags: bsd_nsca
 
 - name: Import nrpe.yml
   ansible.builtin.import_tasks: nrpe.yml
-  when: bsd_nrpe_install | bool
-  tags: bsd_nagios_nrpe
+  when: bsd_nrpe | bool
+  tags: bsd_nrpe
 
 - name: Import rcconf.yml
   ansible.builtin.import_tasks: rcconf.yml
