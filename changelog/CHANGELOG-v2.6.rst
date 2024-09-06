@@ -5,6 +5,28 @@ vbotka.freebsd_nagios 2.6 Release Notes
 .. contents:: Topics
 
 
+2.6.1
+=====
+
+Release Summary
+---------------
+Maintenace update.
+
+Major Changes
+-------------
+
+Minor Changes
+-------------
+* Add variable ma_role_version
+* Update tasks debug.yml
+
+Bugfixes
+--------
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+
 2.6.0
 =====
 
