@@ -6,7 +6,7 @@
     line: '{{ bsd_nsca_service }}_enable="YES"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: enable and start nsca
-  when: bsd_nsca_enable
+  when: bsd_nsca_enable | bool
 
 - name: "Rcconf:nsca: Disable and stop {{ bsd_nsca_service }}"
   ansible.builtin.lineinfile:
@@ -15,7 +15,7 @@
     line: '{{ bsd_nsca_service }}_enable="NO"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: disable and stop nsca
-  when: not bsd_nsca_enable
+  when: not bsd_nsca_enable | bool
 
 - name: "Rcconf:nsca: Configure nsca in /etc/rc.conf"
   ansible.builtin.lineinfile:

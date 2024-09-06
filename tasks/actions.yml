@@ -2,7 +2,7 @@
 - name: "Actions: Debug"
   ansible.builtin.debug:
     var: bsd_nagios_actions
-  when: bsd_nagios_debug|bool
+  when: bsd_nagios_debug | bool
 
 - name: "Actions: Nagios downtime and notifications"
   community.general.nagios:
@@ -24,6 +24,6 @@
 - name: "Actions: Debug"
   ansible.builtin.debug:
     var: result
-  when: bsd_nagios_debug|bool
+  when: bsd_nagios_debug | bool
 
 # EOF

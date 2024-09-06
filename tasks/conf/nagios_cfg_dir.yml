@@ -1,5 +1,5 @@
 ---
-# cfg_dir in nagios.cfg
+  # cfg_dir in nagios.cfg
 - name: "Conf:cfg_dir: Debug"
   ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_dirs
@@ -37,7 +37,7 @@
     - verify nagios
     - reload nagios
 
-# Read objects from files in directory bsd_nagios_objects_dir
+  # Read objects from files in directory bsd_nagios_objects_dir
 - name: "Conf:cfg_dir: Find files in {{ bsd_nagios_objects_dir }}"
   ansible.builtin.find:
     paths: "{{ bsd_nagios_objects_dir }}"
@@ -59,7 +59,7 @@
     var: bsd_nagios_objects
   when: bsd_nagios_debug | bool
 
-# Configure objects from variable bsd_nagios_objects
+  # Configure objects from variable bsd_nagios_objects
 - name: "Conf:cfg_dir: Configure nagios objects"
   ansible.builtin.blockinfile:
     dest: "{{ item.0.file }}"

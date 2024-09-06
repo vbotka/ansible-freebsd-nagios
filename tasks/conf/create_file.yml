@@ -9,15 +9,16 @@
   vars:
     file_sample: "{{ item }}{{ bsd_nagios_conf_sample }}"
   block:
-    - name: "Conf:create_file: Stat {{ file_sample }}"
-      ansible.builtin.stat:
-        path: "{{ file_sample }}"
-      register: conf_file_sample
 
-    - name: "Conf:create_file: Debug stat bsd_nagios_debug={{ bsd_nagios_debug }}"
-      ansible.builtin.debug:
-        var: conf_file_sample
-      when: bsd_nagios_debug | bool
+    # - name: "Conf:create_file: Stat {{ file_sample }}"
+    #   ansible.builtin.stat:
+    #     path: "{{ file_sample }}"
+    #   register: result
+
+    # - name: "Conf:create_file: Debug stat bsd_nagios_debug={{ bsd_nagios_debug }}"
+    #   ansible.builtin.debug:
+    #     var: result
+    #   when: bsd_nagios_debug | bool
 
     - name: "Conf:create_file: Create {{ item }}"
       ansible.builtin.copy:

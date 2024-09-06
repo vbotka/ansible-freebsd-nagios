@@ -2,14 +2,14 @@
 - name: "Conf:files: Debug"
   ansible.builtin.debug:
     var: bsd_nagios_conf_files
-  when: bsd_nagios_debug|bool
+  when: bsd_nagios_debug | bool
 
 - name: "Conf:files: Remove config files"
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nagios_conf_files }}"
-  when: bsd_nagios_conf_recreate|bool
+  when: bsd_nagios_conf_recreate | bool
 
 - name: "Conf:files: Create config files from samples"
   ansible.builtin.include_tasks: conf/create_file.yml

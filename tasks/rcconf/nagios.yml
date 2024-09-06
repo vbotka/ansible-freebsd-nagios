@@ -6,7 +6,7 @@
     line: '{{ bsd_nagios_service }}_enable="YES"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: enable and start nagios
-  when: bsd_nagios_enable
+  when: bsd_nagios_enable | bool
 
 - name: "Rcconf:nagios: Disable and stop {{ bsd_nagios_service }}"
   ansible.builtin.lineinfile:
@@ -15,7 +15,7 @@
     line: '{{ bsd_nagios_service }}_enable="NO"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: disable and stop nagios
-  when: not bsd_nagios_enable
+  when: not bsd_nagios_enable | bool
 
 - name: "Rcconf:nagios: Configure nagios in /etc/rc.conf"
   ansible.builtin.lineinfile:

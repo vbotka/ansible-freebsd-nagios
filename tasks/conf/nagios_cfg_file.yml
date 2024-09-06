@@ -2,7 +2,7 @@
 - name: "Conf:cfg_file: Debug"
   ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_files
-  when: bsd_nagios_debug|bool
+  when: bsd_nagios_debug | bool
 
 - name: "Conf:cfg_file: Configure options cfg_file in nagios.cfg"
   ansible.builtin.lineinfile:
@@ -13,7 +13,7 @@
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
     label: "{{ item.file }} {{ item.present | d(true) | bool }}"
-  when: item.present|d(true)|bool
+  when: item.present | d(true) | bool
   notify:
     - verify nagios
     - reload nagios
@@ -27,7 +27,7 @@
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
     label: "{{ item.file }} {{ item.present | d(true) | bool }}"
-  when: not item.present|d(true)|bool
+  when: not item.present | d(true) | bool
   notify:
     - verify nagios
     - reload nagios
@@ -52,7 +52,7 @@
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
     label: "{{ item.file | dirname | basename }} {{ item.file | basename }} {{ item.present }}"
-  when: item.objects|length > 0
+  when: item.objects | length > 0
   notify:
     - verify nagios
     - reload nagios

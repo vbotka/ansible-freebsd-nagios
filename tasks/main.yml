@@ -3,12 +3,12 @@
 
 - name: Import debug.yml
   ansible.builtin.import_tasks: debug.yml
-  when: bsd_nagios_debug|bool
+  when: bsd_nagios_debug | bool
   tags: [bsd_nagios_debug, always]
 
 - name: Import pkg.yml
   ansible.builtin.import_tasks: pkg.yml
-  when: bsd_nagios_install|bool
+  when: bsd_nagios_install | bool
   tags: bsd_nagios_pkg
 
 - name: Import conf.yml
@@ -33,7 +33,7 @@
 
 - name: Import audit.yml
   ansible.builtin.import_tasks: audit.yml
-  when: bsd_nagios_audit|bool
+  when: bsd_nagios_audit | bool
   tags: bsd_nagios_audit
 
 # EOF
