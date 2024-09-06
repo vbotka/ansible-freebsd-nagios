@@ -1,39 +1,44 @@
 ---
 # nsca handlers freebsd_nagios
 
-- name: enable and start nsca
+- name: Enable and start nsca
+  listen: enable and start nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: started
     enabled: true
 
-- name: disable and stop nsca
+- name: Disable and stop nsca
+  listen: disable and stop nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: stopped
     enabled: false
 
-- name: start nsca
+- name: Start nsca
+  listen: start nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: started
 
-- name: stop nsca
+- name: Stop nsca
+  listen: stop nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: stopped
 
-- name: restart nsca
+- name: Restart nsca
+  listen: restart nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: restarted
-  when: bsd_nsca_enable|bool
+  when: bsd_nsca_enable | bool
 
-- name: reload nsca
+- name: Reload nsca
+  listen: reload nsca
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: reloaded
-  when: bsd_nsca_enable|bool
+  when: bsd_nsca_enable | bool
 
 # EOF
-...

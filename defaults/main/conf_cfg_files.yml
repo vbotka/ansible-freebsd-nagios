@@ -27,4 +27,3 @@ bsd_nagios_conf_cfg_files:
     present: false
 
 # EOF
-...

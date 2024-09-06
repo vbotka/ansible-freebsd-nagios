@@ -1,15 +1,14 @@
 ---
-
-- name: "package: Install Nagios packages."
+- name: "Pkg: Install Nagios packages."
   community.general.pkgng:
     name: "{{ bsd_nagios_packages }}"
   register: result
   retries: "{{ freebsd_install_retries }}"
   until: result is succeeded
   delay: "{{ freebsd_install_delay }}"
-  when: freebsd_install_method|lower == 'packages'
+  when: freebsd_install_method | lower == 'packages'
 
-- name: "packages: Install Nagios ports."
+- name: "Pkg: Install Nagios ports."
   community.general.portinstall:
     name: "{{ item }}"
     use_packages: "{{ freebsd_use_packages }}"
@@ -18,7 +17,6 @@
   retries: "{{ freebsd_install_retries }}"
   until: result is succeeded
   delay: "{{ freebsd_install_delay }}"
-  when: freebsd_install_method|lower == 'ports'
+  when: freebsd_install_method | lower == 'ports'
 
 # EOF
-...

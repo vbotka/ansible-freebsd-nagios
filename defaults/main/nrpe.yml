@@ -12,7 +12,6 @@ bsd_nrpe_conf_files:
 bsd_nrpe_conf_options:
   - file: "{{ bsd_nrpe_conf_path }}/nrpe.cfg"
     conf:
-      - {key: log_facility, val: daemon, present: true}
+      - { key: log_facility, val: daemon, present: true }
 
 # EOF
-...

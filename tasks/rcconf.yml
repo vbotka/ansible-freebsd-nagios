@@ -1,5 +1,4 @@
 ---
-
 - name: Import rcconf/nagios.yml
   ansible.builtin.import_tasks: rcconf/nagios.yml
 
@@ -10,4 +9,3 @@
   ansible.builtin.import_tasks: rcconf/nrpe.yml
 
 # EOF
-...

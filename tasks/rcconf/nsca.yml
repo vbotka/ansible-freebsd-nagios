@@ -1,31 +1,29 @@
 ---
-
-- name: "rcconf:nsca: Enable and start {{ bsd_nsca_service }}"
+- name: "Rcconf:nsca: Enable and start {{ bsd_nsca_service }}"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$'
+    regexp: ^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$
     line: '{{ bsd_nsca_service }}_enable="YES"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: enable and start nsca
-  when: bsd_nsca_enable
+  when: bsd_nsca_enable | bool
 
-- name: "rcconf:nsca: Disable and stop {{ bsd_nsca_service }}"
+- name: "Rcconf:nsca: Disable and stop {{ bsd_nsca_service }}"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$'
+    regexp: ^\s*{{ bsd_nsca_service }}_enable\s*=(.*)$
     line: '{{ bsd_nsca_service }}_enable="NO"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: disable and stop nsca
-  when: not bsd_nsca_enable
+  when: not bsd_nsca_enable | bool
 
-- name: "rcconf:nsca: Configure nsca in /etc/rc.conf"
+- name: "Rcconf:nsca: Configure nsca in /etc/rc.conf"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ item.key }}\s*=(.*)$'
+    regexp: ^\s*{{ item.key }}\s*=(.*)$
     line: '{{ item.key }}="{{ item.val }}"'
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nsca_rcconf }}"
   notify: reload nsca
 
 # EOF
-...

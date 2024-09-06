@@ -1,6 +1,5 @@
 ---
-
-- name: "audit: Not implemented."
+- name: "Audit: Not implemented."
   ansible.builtin.debug:
     msg: Not implemeted yet.
 
@@ -19,4 +18,3 @@
 # Secure Communication Channels.
 
 # EOF
-...

@@ -1,31 +1,29 @@
 ---
-
-- name: "rcconf:nrpe: Enable and start {{ bsd_nrpe_service }}"
+- name: "Rcconf:nrpe: Enable and start {{ bsd_nrpe_service }}"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ bsd_nrpe_service }}_enable\s*=(.*)$'
+    regexp: ^\s*{{ bsd_nrpe_service }}_enable\s*=(.*)$
     line: '{{ bsd_nrpe_service }}_enable="YES"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: enable and start nrpe
-  when: bsd_nrpe_enable
+  when: bsd_nrpe_enable | bool
 
-- name: "rcconf:nrpe: Disable and stop {{ bsd_nrpe_service }}"
+- name: "Rcconf:nrpe: Disable and stop {{ bsd_nrpe_service }}"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ bsd_nrpe_service }}_enable\s*=(.*)$'
+    regexp: ^\s*{{ bsd_nrpe_service }}_enable\s*=(.*)$
     line: '{{ bsd_nrpe_service }}_enable="NO"'
     backup: "{{ bsd_nagios_backup_conf }}"
   notify: disable and stop nrpe
-  when: not bsd_nrpe_enable
+  when: not bsd_nrpe_enable | bool
 
-- name: "rcconf:nrpe: Configure nrpe in /etc/rc.conf"
+- name: "Rcconf:nrpe: Configure nrpe in /etc/rc.conf"
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
-    regexp: '^\s*{{ item.key }}\s*=(.*)$'
+    regexp: ^\s*{{ item.key }}\s*=(.*)$
     line: '{{ item.key }}="{{ item.val }}"'
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nrpe_rcconf }}"
   notify: reload nrpe
 
 # EOF
-...

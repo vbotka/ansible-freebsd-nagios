@@ -1,6 +1,8 @@
 # freebsd_nagios
 
-[![quality](https://img.shields.io/ansible/quality/27910)](https://galaxy.ansible.com/vbotka/freebsd_nagios)[![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
+[![quality](https://img.shields.io/ansible/quality/27910)](https://galaxy.ansible.com/vbotka/freebsd_nagios)
+[![Build Status](https://travis-ci.org/vbotka/ansible-freebsd-nagios.svg?branch=master)](https://travis-ci.org/vbotka/ansible-freebsd-nagios)
+[![GitHub tag](https://img.shields.io/github/v/tag/vbotka/ansible-freebsd-nagios)](https://github.com/vbotka/ansible-freebsd-nagios/tags)
 
 
 ## Table of Contents
@@ -16,7 +18,7 @@
 
 ## <a name="Introduction"></a>Introduction
 
-[Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Configure Nagios.
+[Ansible role.](https://galaxy.ansible.com/vbotka/freebsd_nagios/) FreeBSD. Install and configure Nagios.
 
 Feel free to [share your feedback and report issues](https://github.com/vbotka/ansible-freebsd-nagios/issues).
 
@@ -27,60 +29,85 @@ Feel free to [share your feedback and report issues](https://github.com/vbotka/a
 
 ### Collections
 
-- community.general
+* community.general
 
-### Recommended
+
+### <a name="Recommended"></a>Recommended
 
 - Role [vbotka.certificate](https://galaxy.ansible.com/vbotka/certificate/)
 - Role [vbotka.apache](https://galaxy.ansible.com/vbotka/apache/)
 
 
-## <a name="Recommended"></a>Recommended
-
-- [Apache](https://galaxy.ansible.com/vbotka/apache/)
-- [Certificate](https://galaxy.ansible.com/vbotka/certificate/)
-
-
-## <a name="Variables"></a>Variables
-
-Review the defaults and examples in vars.
-
-
 ## <a name="Workflow"></a>Workflow
 
-1) Change shell to /bin/sh
+1) Change the shell to /bin/sh if necessary
 
-```
+```bash
 shell> ansible host -e 'ansible_shell_type=csh ansible_shell_executable=/bin/csh' -a 'sudo pw usermod admin -s /bin/sh'
 ```
 
-2) Install the role and collections
+2) Install the role
 
-```
+```bash
 shell> ansible-galaxy role install vbotka.freebsd_nagios
+```
+
+Install the collection if necessary
+
+```bash
 shell> ansible-galaxy collection install community.general
 ```
 
-3) Fit variables, e.g. in vars/main.yml
-
-```
-shell> editor vbotka.freebsd_nagios/vars/main.yml
-```
+3) Fit variables to your needs. See examples in vars/main.yml.sample
 
 4) Create and run the playbook
 
-```
+```yaml
 shell> cat freebsd-nagios.yml
 - hosts: nagios.example.com
   roles:
     - vbotka.freebsd_nagios
-    
+```
+
+Check syntax
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml --syntax-check
+```
+
+Display variables
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_debug -e bsd_nagios_debug=true
+```
+
+Install packages
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_pkg -e bsd_nagios_install=true
+```
+
+Create missing configuration files from samples
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files,bsd_nsca_conf_files,bsd_nrpe_conf_files
+```
+
+Dry-run the play and see the potential differences
+
+```bash
+shell> ansible-playbook freebsd-nagios.yml --check --diff
+```
+
+Run the play
+
+```bash
 shell> ansible-playbook freebsd-nagios.yml
 ```
 
 5) Create [certificates](https://galaxy.ansible.com/vbotka/certificate/)
 
-```
+```yaml
 certificate_self_signed:
   - {CN: 'nagios.example.com',
      private: 'nagios.example.com.key',
@@ -90,7 +117,7 @@ certificate_self_signed:
 
 ### Configure [Apache](https://galaxy.ansible.com/vbotka/apache/)
 
-```
+```yaml
 apache_vhost:
   - ServerName: 'nagios.example.com'
     DocumentRoot: '/usr/local/www/nagios'
@@ -130,15 +157,15 @@ apache_httpd_conf_modules:
   - {module: 'cgid_module', mod: 'mod_cgid.so', present: true}
 ```
 
-Install py39-htpasswd (Replacement for htpasswd)
+Install security/py-htpasswd
 
-```
-shell> pkg install py39-htpasswd
+```bash
+shell> pkg install security/py-htpasswd
 ```
 
-Create password for nagiosadmin
+Create file etc/nagios/htpasswd.users with password for nagiosadmin
 
-```
+```bash
 shell> htpasswd.py -b -c /usr/local/etc/nagios/htpasswd.users nagiosadmin ngadminpasswd
 ```
 
@@ -147,7 +174,7 @@ shell> htpasswd.py -b -c /usr/local/etc/nagios/htpasswd.users nagiosadmin ngadmi
 
 TODO: [ansible-config-light](https://github.com/vbotka/ansible-config-light) install and configure *lighttpd*
 
-```
+```bash
 shell> pwd
 /usr/local/etc/lighttpd
 
@@ -177,9 +204,9 @@ $HTTP["url"] =~ "nagios" {
 # END ANSIBLE MANAGED BLOCK auth
 ```
 
-Create password for nagiosadmin
+Create file etc/nagios/passwd with password for nagiosadmin
 
-```
+```bash
 shell> cat /usr/local/etc/nagios/passwd
 nagiosadmin:ngadminpasswd
 ```

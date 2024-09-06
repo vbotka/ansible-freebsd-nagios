@@ -10,7 +10,6 @@ bsd_nsca_conf_files:
 bsd_nsca_conf_options:
   - file: "{{ bsd_nagios_conf_path }}/nsca.cfg"
     conf:
-      - {key: log_facility, val: daemon, present: true}
+      - { key: log_facility, val: daemon, present: true }
 
 # EOF
-...

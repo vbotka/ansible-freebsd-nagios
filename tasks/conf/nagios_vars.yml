@@ -1,11 +1,9 @@
 ---
-
-- name: "conf:vars: Include vars from {{ item }}"
+- name: "Conf:vars: Include vars from {{ item }}"
   ansible.builtin.include_vars: "{{ item }}"
 
-- name: "conf:vars: Add {{ item }} to bsd_nagios_objects"
+- name: "Conf:vars: To bsd_nagios_objects add {{ item }}"
   ansible.builtin.set_fact:
     bsd_nagios_objects: "{{ bsd_nagios_objects + objects }}"
 
 # EOF
-...

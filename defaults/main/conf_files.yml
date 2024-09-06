@@ -3,7 +3,7 @@
 bsd_nagios_conf_recreate: false
 bsd_nagios_conf_path: /usr/local/etc/nagios
 bsd_nagios_conf_objects: "{{ bsd_nagios_conf_path }}/objects"
-bsd_nagios_conf_sample: '-sample'
+bsd_nagios_conf_sample: -sample
 bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_path }}/cgi.cfg"
   - "{{ bsd_nagios_conf_path }}/nagios.cfg"
@@ -18,4 +18,3 @@ bsd_nagios_conf_files:
   - "{{ bsd_nagios_conf_objects }}/windows.cfg"
 
 # EOF
-...

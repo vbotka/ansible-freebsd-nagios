@@ -1,36 +1,40 @@
 ---
-
-- name: "conf:create_file: Stat {{ item }}"
+- name: "Conf:create_file: Stat {{ item }}"
   ansible.builtin.stat:
     path: "{{ item }}"
   register: conf_file
 
-- block:
-    - name: "conf:create_file: Stat {{ item }}{{ bsd_nagios_conf_sample }}"
-      ansible.builtin.stat:
-        path: "{{ item }}{{ bsd_nagios_conf_sample }}"
-      register: conf_file_sample
-    - name: "conf:create_file: Debug stat {{ item }}{{ bsd_nagios_conf_sample }}"
-      ansible.builtin.debug:
-        var: conf_file_sample
-      when: bsd_nagios_debug|bool
-    - name: "conf:create_file: Create {{ item }}"
+- name: Create conf file from sample.
+  when: not conf_file.stat.exists | d(false)
+  vars:
+    file_sample: "{{ item }}{{ bsd_nagios_conf_sample }}"
+  block:
+
+    # - name: "Conf:create_file: Stat {{ file_sample }}"
+    #   ansible.builtin.stat:
+    #     path: "{{ file_sample }}"
+    #   register: result
+
+    # - name: "Conf:create_file: Debug stat bsd_nagios_debug={{ bsd_nagios_debug }}"
+    #   ansible.builtin.debug:
+    #     var: result
+    #   when: bsd_nagios_debug | bool
+
+    - name: "Conf:create_file: Create {{ item }}"
       ansible.builtin.copy:
-        remote_src: True
-        src: "{{ item }}{{ bsd_nagios_conf_sample }}"
+        remote_src: true
+        src: "{{ file_sample }}"
         dest: "{{ item }}"
         owner: "{{ conf_file_sample.stat.pw_name }}"
         group: "{{ conf_file_sample.stat.gr_name }}"
         mode: preserve
-  when: not conf_file.stat.exists
 
-# Let's keep the samples' ownership and mode
-# TODO: Optionally change ownership and mode
-# - name: "conf:create: Chown {{ item }}"
-#   file:
-#     path: "{{ item }}"
-#     owner: "{{ bsd_nagios_conf_owner }}"
-#     group: "{{ bsd_nagios_conf_group }}"
+    # Let's keep the samples' ownership and mode
+    # TODO: Optionally change ownership and mode
+    # - name: "Conf:create: chown {{ item }}"
+    #   file:
+    #     path: "{{ item }}"
+    #     owner: "{{ bsd_nagios_conf_owner }}"
+    #     group: "{{ bsd_nagios_conf_group }}"
 
 # EOF
-...

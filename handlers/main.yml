@@ -11,4 +11,3 @@
   ansible.builtin.import_tasks: nrpe.yml
 
 # EOF
-...
