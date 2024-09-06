@@ -2,6 +2,7 @@
 - name: Nagios Debug
   vars:
     msg: |-
+      bsd_nagios_role_version: {{ bsd_nagios_role_version }}
       ansible_architecture: {{ ansible_architecture }}
       ansible_os_family: {{ ansible_os_family }}
       ansible_distribution: {{ ansible_distribution }}
@@ -53,6 +54,9 @@
         {{ bsd_nagios_objects | to_yaml(indent=2) | indent(2) }}
       bsd_nagios_actions:
         {{ bsd_nagios_actions | to_yaml(indent=2) | indent(2) }}
+      bsd_nsca_install: {{ bsd_nsca_install }}
+      bsd_nsca_packages:
+        {{ bsd_nsca_packages | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nsca_enable: {{ bsd_nsca_enable }}
       bsd_nsca_service: {{ bsd_nsca_service }}
       bsd_nsca_rcconf:
@@ -62,6 +66,9 @@
         {{ bsd_nsca_conf_files | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nsca_conf_options:
         {{ bsd_nsca_conf_options | to_yaml(indent=2) | indent(2) }}
+      bsd_nrpe_install: {{ bsd_nrpe_install }}
+      bsd_nrpe_packages:
+        {{ bsd_nrpe_packages | to_nice_yaml(indent=2) | indent(2) }}
       bsd_nrpe_enable: {{ bsd_nrpe_enable }}
       bsd_nrpe_service: {{ bsd_nrpe_service }}
       bsd_nrpe_rcconf:

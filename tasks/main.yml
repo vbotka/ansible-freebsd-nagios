@@ -8,7 +8,6 @@
 
 - name: Import pkg.yml
   ansible.builtin.import_tasks: pkg.yml
-  when: bsd_nagios_install | bool
   tags: bsd_nagios_pkg
 
 - name: Import conf.yml
@@ -17,10 +16,12 @@
 
 - name: Import nsca.yml
   ansible.builtin.import_tasks: nsca.yml
+  when: bsd_nsca_install | bool
   tags: bsd_nagios_nsca
 
 - name: Import nrpe.yml
   ansible.builtin.import_tasks: nrpe.yml
+  when: bsd_nrpe_install | bool
   tags: bsd_nagios_nrpe
 
 - name: Import rcconf.yml

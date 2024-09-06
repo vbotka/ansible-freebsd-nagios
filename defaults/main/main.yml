@@ -1,10 +1,16 @@
 ---
 # defaults freebsd_nagios
+bsd_nagios_role_version: 2.6.1
 
 bsd_nagios_install: true
 bsd_nagios_enable: false
+
+bsd_nsca_install: false
 bsd_nsca_enable: false
+
+bsd_nrpe_install: false
 bsd_nrpe_enable: false
+
 bsd_nagios_debug: false
 bsd_nagios_backup_conf: false
 bsd_nagios_audit: false
@@ -18,7 +24,9 @@ freebsd_install_delay: 5
 bsd_nagios_packages:
   - net-mgmt/nagios4
   - net-mgmt/nagios-plugins
+bsd_nsca_packages:
   - net-mgmt/nsca
+bsd_nrpe_packages:
   - net-mgmt/nrpe
 
 # rc.conf
