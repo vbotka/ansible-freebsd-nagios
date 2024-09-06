@@ -58,8 +58,17 @@ Install the collection if necessary
 shell> ansible-galaxy collection install community.general
 ```
 
-3) Fit variables to your needs. See examples in
-   vars/main.yml.sample. By default, all services are disabled
+3) Fit variables to your needs. See the defaults in defaults/main and
+   examples in vars/main.yml.sample.
+
+By default, the configuration of nsca and nrpe is disabled
+
+```yaml
+bsd_nsca: false
+bsd_nrpe: false
+```
+
+By default, all services are disabled
 
 ```yaml
 bsd_nagios_enable: false
@@ -105,8 +114,7 @@ shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_pkg -e bsd_nagios_insta
 
 After the installation set the variables *false* to speedup the configuration.
 
-* Create missing configuration files from samples. Trim the tags
-  according the installed packages if you want to
+* Create missing configuration files from samples. Trim the tags to your needs
 
 ```bash
 shell> ansible-playbook freebsd-nagios.yml -t bsd_nagios_conf_files,bsd_nsca_conf_files,bsd_nrpe_conf_files

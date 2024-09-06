@@ -1,18 +1,31 @@
 ---
 # defaults freebsd_nagios
-bsd_nagios_role_version: 2.6.1
+bsd_nagios_role_version: 2.6.2
 
+# Install bsd_nagios_packages
 bsd_nagios_install: true
+# Enable bsd_nagios_service
 bsd_nagios_enable: false
 
+# Configure nsca
+bsd_nsca: false
+# Install bsd_nsca_packages
 bsd_nsca_install: false
+# Enable bsd_nsca_service
 bsd_nsca_enable: false
 
+# Configure nrpe
+bsd_nrpe: false
+# Install bsd_nrpe_packages
 bsd_nrpe_install: false
+# Enable bsd_nrpe_service
 bsd_nrpe_enable: false
 
+# Display debug
 bsd_nagios_debug: false
+# Backup configuration files
 bsd_nagios_backup_conf: false
+# Enable audit (TODO)
 bsd_nagios_audit: false
 
 freebsd_install_method: packages

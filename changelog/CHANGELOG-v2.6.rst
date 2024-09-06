@@ -5,6 +5,32 @@ vbotka.freebsd_nagios 2.6 Release Notes
 .. contents:: Topics
 
 
+2.6.2
+=====
+
+Release Summary
+---------------
+Maintenance update.
+
+Major Changes
+-------------
+* By default, the configuration of nsca and nrpe is disabled. See
+  Breaking Changes below.
+
+Minor Changes
+-------------
+* Update tasks debug.yml
+* Update README.
+
+Bugfixes
+--------
+
+Breaking Changes / Porting Guide
+--------------------------------
+* Add variables bsd_nsca and bsd_nrpe default=false to enable the
+  configuration of nsca and nrpe. See defaults/main/main.yml
+
+
 2.6.1
 =====
 
