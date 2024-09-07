@@ -17,6 +17,7 @@ Major Changes
 
 Minor Changes
 -------------
+* Update tests/test.yml playbook
 
 Bugfixes
 --------
