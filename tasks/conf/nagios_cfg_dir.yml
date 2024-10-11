@@ -1,66 +1,65 @@
 ---
-  # cfg_dir in nagios.cfg
-- name: "Conf:cfg_dir: Debug"
+  # Configure cfg_dir in nagios.cfg
+- name: "Conf:cfg_dir: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_dirs
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:cfg_dir: Create cfg_dir"
+  when: item.present | d(true) | bool
   ansible.builtin.file:
     state: directory
     path: "{{ item.cfg_dir }}"
     mode: "0755"
   loop: "{{ bsd_nagios_conf_cfg_dirs }}"
-  when: item.present | d(true) | bool
 
-- name: "Conf:cfg_dir: Configure options cfg_dir in nagios.cfg"
-  ansible.builtin.lineinfile:
-    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: ^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$
-    line: cfg_dir={{ item.cfg_dir }}
-    backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nagios_cfg_dirs }}"
-  when: item.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
+- name: Configure cfg_dir in nagios.cfg
+  notify: [verify nagios, reload nagios]
+  block:
 
-- name: "Conf:cfg_dir: Remove options cfg_dir from nagios.cfg"
-  ansible.builtin.lineinfile:
-    dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
-    regexp: ^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$
-    line: "# cfg_dir={{ item.cfg_dir }}"
-    backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ bsd_nagios_cfg_dirs }}"
-  when: not item.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
+    - name: "Conf:cfg_dir: Configure options cfg_dir in nagios.cfg"
+      when: item.present | d(true)
+      ansible.builtin.lineinfile:
+        dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+        regexp: ^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$
+        line: cfg_dir={{ item.cfg_dir }}
+        backup: "{{ bsd_nagios_backup_conf }}"
+      loop: "{{ bsd_nagios_cfg_dirs }}"
+
+    - name: "Conf:cfg_dir: Remove options cfg_dir from nagios.cfg"
+      when: not item.present | d(true)
+      ansible.builtin.lineinfile:
+        dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
+        regexp: ^\s*#*\s*cfg_dir\s*=\s*{{ item.cfg_dir }}\s*$
+        line: "# cfg_dir={{ item.cfg_dir }}"
+        backup: "{{ bsd_nagios_backup_conf }}"
+      loop: "{{ bsd_nagios_cfg_dirs }}"
 
   # Read objects from files in directory bsd_nagios_objects_dir
 - name: "Conf:cfg_dir: Find files in {{ bsd_nagios_objects_dir }}"
+  delegate_to: localhost
+  register: result
   ansible.builtin.find:
     paths: "{{ bsd_nagios_objects_dir }}"
     patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
-  delegate_to: localhost
-  register: result
 
 - name: "Conf:cfg_dir: Debug result bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     msg: "{{ result | json_query('files[].path') }}"
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:cfg_dir: Read vars"
   ansible.builtin.include_tasks: conf/nagios_vars.yml
   loop: "{{ result | json_query('files[].path') }}"
 
 - name: "Conf:cfg_dir: List bsd_nagios_objects bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nagios_objects
-  when: bsd_nagios_debug | bool
 
   # Configure objects from variable bsd_nagios_objects
 - name: "Conf:cfg_dir: Configure nagios objects"
+  notify: [verify nagios, reload nagios]
   ansible.builtin.blockinfile:
     dest: "{{ item.0.file }}"
     mode: "{{ item.0.mode|d(omit) }}"
@@ -75,9 +74,6 @@
       {{ item.0.file | dirname | basename }}
       {{ item.0.file | basename }}
       {{ item.1.template }}: {{ item.1.name }} {{ item.1.state }}
-  notify:
-    - verify nagios
-    - reload nagios
 
 # Note: Validate does not work. Optional path to config not available.
 # validate: "{{ bsd_nagios_program }} -v %s"

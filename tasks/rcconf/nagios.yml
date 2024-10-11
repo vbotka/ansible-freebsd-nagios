@@ -1,29 +1,29 @@
 ---
 - name: "Rcconf:nagios: Enable and start {{ bsd_nagios_service }}"
+  when: bsd_nagios_enable | bool
+  notify: enable and start nagios
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: ^\s*{{ bsd_nagios_service }}_enable\s*=(.*)$
     line: '{{ bsd_nagios_service }}_enable="YES"'
     backup: "{{ bsd_nagios_backup_conf }}"
-  notify: enable and start nagios
-  when: bsd_nagios_enable | bool
 
 - name: "Rcconf:nagios: Disable and stop {{ bsd_nagios_service }}"
+  when: not bsd_nagios_enable | bool
+  notify: disable and stop nagios
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: ^\s*{{ bsd_nagios_service }}_enable\s*=(.*)$
     line: '{{ bsd_nagios_service }}_enable="NO"'
     backup: "{{ bsd_nagios_backup_conf }}"
-  notify: disable and stop nagios
-  when: not bsd_nagios_enable | bool
 
 - name: "Rcconf:nagios: Configure nagios in /etc/rc.conf"
+  notify: reload nagios
   ansible.builtin.lineinfile:
     dest: /etc/rc.conf
     regexp: ^\s*{{ item.key }}\s*=(.*)$
     line: '{{ item.key }}="{{ item.val }}"'
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_rcconf }}"
-  notify: reload nagios
 
 # EOF

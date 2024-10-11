@@ -29,16 +29,16 @@
 
 - name: Restart nsca
   listen: restart nsca
+  when: bsd_nsca_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: restarted
-  when: bsd_nsca_enable | bool
 
 - name: Reload nsca
   listen: reload nsca
+  when: bsd_nsca_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nsca_service }}"
     state: reloaded
-  when: bsd_nsca_enable | bool
 
 # EOF

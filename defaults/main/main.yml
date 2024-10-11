@@ -1,6 +1,6 @@
 ---
 # defaults freebsd_nagios
-bsd_nagios_role_version: 2.6.3
+bsd_nagios_role_version: 2.6.4
 
 # Install bsd_nagios_packages
 bsd_nagios_install: true

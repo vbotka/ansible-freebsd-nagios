@@ -4,71 +4,71 @@
   block:
 
     - name: "Pkg: Install Nagios packages."
+      when: freebsd_install_method | lower == 'packages'
       community.general.pkgng:
         name: "{{ bsd_nagios_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'packages'
 
     - name: "Pkg: Install Nagios ports."
+      when: freebsd_install_method | lower == 'ports'
       community.general.portinstall:
         name: "{{ item }}"
         use_packages: "{{ freebsd_use_packages }}"
       loop: "{{ bsd_nagios_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'ports'
 
 - name: Install nsca
   when: bsd_nsca_install | bool
   block:
 
     - name: "Pkg: Install nsca packages."
+      when: freebsd_install_method | lower == 'packages'
       community.general.pkgng:
         name: "{{ bsd_nsca_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'packages'
 
     - name: "Pkg: Install nsca ports."
+      when: freebsd_install_method | lower == 'ports'
       community.general.portinstall:
         name: "{{ item }}"
         use_packages: "{{ freebsd_use_packages }}"
       loop: "{{ bsd_nsca_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'ports'
 
 - name: Install nrpe
   when: bsd_nrpe_install | bool
   block:
 
     - name: "Pkg: Install nrpe packages."
+      when: freebsd_install_method | lower == 'packages'
       community.general.pkgng:
         name: "{{ bsd_nrpe_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'packages'
 
     - name: "Pkg: Install nrpe ports."
+      when: freebsd_install_method | lower == 'ports'
       community.general.portinstall:
         name: "{{ item }}"
         use_packages: "{{ freebsd_use_packages }}"
       loop: "{{ bsd_nrpe_packages }}"
-      register: result
       retries: "{{ freebsd_install_retries }}"
+      register: result
       until: result is succeeded
       delay: "{{ freebsd_install_delay }}"
-      when: freebsd_install_method | lower == 'ports'
 
 # EOF

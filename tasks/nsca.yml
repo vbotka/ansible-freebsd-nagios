@@ -1,9 +1,11 @@
 ---
 - name: "Nsca: Create config files from samples"
-  ansible.builtin.import_tasks: conf/nsca_files.yml
   tags: bsd_nsca_conf_files
+  ansible.builtin.import_tasks: conf/nsca_files.yml
 
 - name: "Nsca: Configure nsca"
+  when: item.1.present | d(true)
+  notify: reload nsca
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: ^\s*#*\s*{{ item.1.key }}
@@ -12,10 +14,10 @@
   loop: "{{ bsd_nsca_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
-  when: item.1.present | d(true) | bool
-  notify: reload nsca
 
 - name: "Conf:nsca: Remove nsca configuration items"
+  when: not item.1.present | d(true)
+  notify: reload nsca
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: ^\s*#*\s*{{ item.1.key }}(.*)$
@@ -24,7 +26,5 @@
   loop: "{{ bsd_nsca_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}"
-  when: not item.1.present | d(true) | bool
-  notify: reload nsca
 
 # EOF

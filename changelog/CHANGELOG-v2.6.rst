@@ -4,11 +4,21 @@ vbotka.freebsd_nagios 2.6 Release Notes
 
 .. contents:: Topics
 
-Bugfixes
---------
-Breaking Changes / Porting Guide
---------------------------------
-# END Release notes 2.6.3
+
+2.6.4
+=====
+
+Release Summary
+---------------
+Maintenance update.
+
+Major Changes
+-------------
+
+Minor Changes
+-------------
+* Tasks formatting improved.
+* Keep owner/group when creating files from samples.
 
 
 2.6.3

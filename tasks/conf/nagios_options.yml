@@ -1,10 +1,12 @@
 ---
-- name: "Conf:options: Debug"
+- name: "Conf:options: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nagios_conf_options
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:options: Configure options"
+  when: item.1.present | d(true)
+  notify: [verify nagios, reload nagios]
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: ^\s*#*\s*{{ item.1.key }}
@@ -13,12 +15,10 @@
   loop: "{{ bsd_nagios_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
-  when: item.1.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
 
 - name: "Conf:options: Remove options"
+  when: not item.1.present | d(true)
+  notify: [verify nagios, reload nagios]
   ansible.builtin.lineinfile:
     backrefs: true
     dest: "{{ item.0.file }}"
@@ -28,9 +28,5 @@
   loop: "{{ bsd_nagios_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}"
-  when: not item.1.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
 
 # EOF

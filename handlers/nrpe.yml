@@ -29,16 +29,16 @@
 
 - name: Restart nrpe
   listen: restart nrpe
+  when: bsd_nrpe_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: restarted
-  when: bsd_nrpe_enable | bool
 
 - name: Reload nrpe
   listen: reload nrpe
+  when: bsd_nrpe_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nrpe_service }}"
     state: reloaded
-  when: bsd_nrpe_enable | bool
 
 # EOF

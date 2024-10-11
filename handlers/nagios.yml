@@ -23,6 +23,7 @@
 
 - name: Stop nagios
   listen: stop nagios
+  when: bsd_nagios_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: stopped
@@ -32,7 +33,6 @@
   ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: restarted
-  when: bsd_nagios_enable | bool
 
 - name: Verify nagios # noqa: no-changed-when
   listen: verify nagios # noqa: no-changed-when
@@ -41,9 +41,9 @@
 
 - name: Reload nagios
   listen: reload nagios
+  when: bsd_nagios_enable | bool
   ansible.builtin.service:
     name: "{{ bsd_nagios_service }}"
     state: reloaded
-  when: bsd_nagios_enable | bool
 
 # EOF
