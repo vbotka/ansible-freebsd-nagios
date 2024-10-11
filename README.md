@@ -238,6 +238,28 @@ shell> cat /usr/local/etc/nagios/passwd
 nagiosadmin:ngadminpasswd
 ```
 
+### Recreate configuration files
+
+If you want to recreate the configuration files from samples set
+
+```yaml
+bsd_nagios_conf_recreate: true
+```
+
+See tasks/conf/nagios_files.yml
+
+
+### Recreate objects files
+
+If you want to recreate the objects files set
+
+```yaml
+bsd_nagios_objects_recreate: true
+```
+
+See tasks/conf/nagios_cfg_dir.yml
+
+
 ## <a name="References"></a>References
 
 - [Nagios Documentation](https://assets.nagios.com/downloads/nagioscore/docs/)

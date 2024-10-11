@@ -1,6 +1,6 @@
 ---
 # defaults freebsd_nagios
-bsd_nagios_role_version: 2.6.4
+bsd_nagios_role_version: 2.6.5
 
 # Install bsd_nagios_packages
 bsd_nagios_install: true
@@ -57,6 +57,7 @@ bsd_nagios_conf_group: wheel
 bsd_nagios_objects: []
 bsd_nagios_objects_dir: "{{ role_path }}/files/nagios-objects.d"
 bsd_nagios_objects_dir_extension: conf
+bsd_nagios_objects_recreate: false
 
 # actions
 bsd_nagios_actions: []

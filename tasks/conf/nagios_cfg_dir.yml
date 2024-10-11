@@ -35,45 +35,60 @@
         backup: "{{ bsd_nagios_backup_conf }}"
       loop: "{{ bsd_nagios_cfg_dirs }}"
 
-  # Read objects from files in directory bsd_nagios_objects_dir
-- name: "Conf:cfg_dir: Find files in {{ bsd_nagios_objects_dir }}"
-  delegate_to: localhost
-  register: result
-  ansible.builtin.find:
-    paths: "{{ bsd_nagios_objects_dir }}"
-    patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
+- name: Read objects from files in directory bsd_nagios_objects_dir
+  block:
 
-- name: "Conf:cfg_dir: Debug result bsd_nagios_debug={{ bsd_nagios_debug }}"
-  when: bsd_nagios_debug | bool
-  ansible.builtin.debug:
-    msg: "{{ result | json_query('files[].path') }}"
+    - name: "Conf:cfg_dir: Find files in {{ bsd_nagios_objects_dir }}"
+      delegate_to: localhost
+      register: result
+      ansible.builtin.find:
+        paths: "{{ bsd_nagios_objects_dir }}"
+        patterns: "*.{{ bsd_nagios_objects_dir_extension }}"
 
-- name: "Conf:cfg_dir: Read vars"
-  ansible.builtin.include_tasks: conf/nagios_vars.yml
-  loop: "{{ result | json_query('files[].path') }}"
+    - name: "Conf:cfg_dir: Debug result bsd_nagios_debug={{ bsd_nagios_debug }}"
+      when: bsd_nagios_debug | bool
+      ansible.builtin.debug:
+        msg: "{{ result | json_query('files[].path') }}"
 
-- name: "Conf:cfg_dir: List bsd_nagios_objects bsd_nagios_debug={{ bsd_nagios_debug }}"
-  when: bsd_nagios_debug | bool
-  ansible.builtin.debug:
-    var: bsd_nagios_objects
+    - name: "Conf:cfg_dir: Read vars"
+      ansible.builtin.include_tasks: conf/nagios_vars.yml
+      loop: "{{ result | json_query('files[].path') }}"
 
-  # Configure objects from variable bsd_nagios_objects
-- name: "Conf:cfg_dir: Configure nagios objects"
-  notify: [verify nagios, reload nagios]
-  ansible.builtin.blockinfile:
-    dest: "{{ item.0.file }}"
-    mode: "{{ item.0.mode|d(omit) }}"
-    marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
-    state: "{{ item.1.state | d('present') }}"
-    block: "{{ lookup('template', item.1.template) }}"
-    create: true
-    backup: "{{ bsd_nagios_backup_conf }}"
-  loop: "{{ lookup('subelements', bsd_nagios_objects, 'objects') }}"
-  loop_control:
-    label: >
-      {{ item.0.file | dirname | basename }}
-      {{ item.0.file | basename }}
-      {{ item.1.template }}: {{ item.1.name }} {{ item.1.state }}
+    - name: "Conf:cfg_dir: List bsd_nagios_objects bsd_nagios_debug={{ bsd_nagios_debug }}"
+      when: bsd_nagios_debug | bool
+      ansible.builtin.debug:
+        var: bsd_nagios_objects
+
+- name: Configure objects from variable bsd_nagios_objects
+  block:
+
+    - name: "Conf:cfg_dir: Remove nagios objects files"
+      when: bsd_nagios_objects_recreate | bool
+      ansible.builtin.file:
+        state: absent
+        dest: "{{ item.file }}"
+      loop: "{{ bsd_nagios_objects }}"
+      loop_control:
+        label: >
+          {{ item.file | dirname | basename }}
+          {{ item.file | basename }}
+
+    - name: "Conf:cfg_dir: Configure nagios objects"
+      notify: [verify nagios, reload nagios]
+      ansible.builtin.blockinfile:
+        dest: "{{ item.0.file }}"
+        mode: "{{ item.0.mode | d(omit) }}"
+        marker: "# {mark} ansible managed block [{{ item.1.template }}: {{ item.1.name }}]"
+        state: "{{ item.1.state | d('present') }}"
+        block: "{{ lookup('template', item.1.template) }}"
+        create: true
+        backup: "{{ bsd_nagios_backup_conf }}"
+      loop: "{{ bsd_nagios_objects | subelements('objects') }}"
+      loop_control:
+        label: >
+          {{ item.0.file | dirname | basename }}
+          {{ item.0.file | basename }}
+          {{ item.1.template }}: {{ item.1.name }} {{ item.1.state }}
 
 # Note: Validate does not work. Optional path to config not available.
 # validate: "{{ bsd_nagios_program }} -v %s"
