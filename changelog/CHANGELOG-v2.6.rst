@@ -5,6 +5,23 @@ vbotka.freebsd_nagios 2.6 Release Notes
 .. contents:: Topics
 
 
+2.6.5
+=====
+
+Release Summary
+---------------
+Maintenance update.
+
+Major Changes
+-------------
+
+Minor Changes
+-------------
+* Add var bsd_nagios_objects_recreate (default=false)
+* Update README
+* Update debug.yml
+
+
 2.6.4
 =====
 
