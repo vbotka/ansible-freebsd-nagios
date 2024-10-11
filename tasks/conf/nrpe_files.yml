@@ -1,15 +1,15 @@
 ---
-- name: "Conf:nrpe_files: Debug"
+- name: "Conf:nrpe_files: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nrpe_conf_files
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:nrpe_files: Remove config files"
+  when: bsd_nrpe_conf_recreate | bool
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nrpe_conf_files }}"
-  when: bsd_nrpe_conf_recreate | bool
 
 - name: "Conf:nrpe_files: Create config files from samples"
   ansible.builtin.include_tasks: conf/create_file.yml

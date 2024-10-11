@@ -1,10 +1,12 @@
 ---
 - name: "Conf:cfg_file: Debug"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nagios_conf_cfg_files
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:cfg_file: Configure options cfg_file in nagios.cfg"
+  when: item.present | d(true)
+  notify: [verify nagios, reload nagios]
   ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: ^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$
@@ -12,13 +14,11 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
-    label: "{{ item.file }} {{ item.present | d(true) | bool }}"
-  when: item.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
+    label: "{{ item.file }} {{ item.present | d(true) }}"
 
 - name: "Conf:cfg_file: Remove options cfg_file from nagios.cfg"
+  when: not item.present | d(true)
+  notify: [verify nagios, reload nagios]
   ansible.builtin.lineinfile:
     dest: "{{ bsd_nagios_conf_path }}/nagios.cfg"
     regexp: ^\s*#*\s*cfg_file\s*=\s*{{ item.file }}\s*$
@@ -26,13 +26,11 @@
     backup: "{{ bsd_nagios_backup_conf }}"
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
-    label: "{{ item.file }} {{ item.present | d(true) | bool }}"
-  when: not item.present | d(true) | bool
-  notify:
-    - verify nagios
-    - reload nagios
+    label: "{{ item.file }} {{ item.present | d(true) }}"
 
 - name: "Conf:cfg_file: Configure nagios objects"
+  when: item.objects | length > 0
+  notify: [verify nagios, reload nagios]
   ansible.builtin.copy:
     dest: "{{ item.file }}"
     mode: "{{ item.mode | d(omit) }}"
@@ -52,10 +50,6 @@
   loop: "{{ bsd_nagios_conf_cfg_files }}"
   loop_control:
     label: "{{ item.file | dirname | basename }} {{ item.file | basename }} {{ item.present }}"
-  when: item.objects | length > 0
-  notify:
-    - verify nagios
-    - reload nagios
 
 # Note: Validate does not work. Optional path to config not available.
 # validate: "{{ bsd_nagios_program }} -v %s"

@@ -1,10 +1,11 @@
 ---
-- name: "Actions: Debug"
+- name: "Actions: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nagios_actions
-  when: bsd_nagios_debug | bool
 
 - name: "Actions: Nagios downtime and notifications"
+  register: result
   community.general.nagios:
     action: "{{ item.action }}"
     author: "{{ item.author | d(omit) }}"
@@ -16,14 +17,13 @@
     servicegroup: "{{ item.servicegroup | d(omit) }}"
     services: "{{ item.services | d(omit) }}"
     start: "{{ item.start | d(omit) }}"
-  register: result
   loop: "{{ bsd_nagios_actions }}"
   loop_control:
     label: "{{ item.action }} {{ item.host | d('nohost') }} {{ item.command | d('nocommand') }}"
 
-- name: "Actions: Debug"
+- name: "Actions: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: result
-  when: bsd_nagios_debug | bool
 
 # EOF

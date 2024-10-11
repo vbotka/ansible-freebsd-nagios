@@ -1,9 +1,11 @@
 ---
 - name: "Nrpe: Create config files from samples"
-  ansible.builtin.import_tasks: conf/nrpe_files.yml
   tags: bsd_nrpe_conf_files
+  ansible.builtin.import_tasks: conf/nrpe_files.yml
 
 - name: "Nrpe: Configure nrpe"
+  when: item.1.present | d(true)
+  notify: reload nrpe
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: ^\s*#*\s*{{ item.1.key }}
@@ -12,10 +14,10 @@
   loop: "{{ bsd_nrpe_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}={{ item.1.val }}"
-  when: item.1.present | d(true) | bool
-  notify: reload nrpe
 
 - name: "Nrpe: Remove nrpe configuration items"
+  when: not item.1.present | d(true)
+  notify: reload nrpe
   ansible.builtin.lineinfile:
     dest: "{{ item.0.file }}"
     regexp: ^\s*#*\s*{{ item.1.key }}(.*)$
@@ -24,7 +26,5 @@
   loop: "{{ bsd_nrpe_conf_options | subelements('conf') }}"
   loop_control:
     label: "{{ item.0.file }} {{ item.1.key }}"
-  when: not item.1.present | d(true) | bool
-  notify: reload nrpe
 
 # EOF

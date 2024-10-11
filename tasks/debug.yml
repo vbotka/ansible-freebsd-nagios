@@ -1,5 +1,5 @@
 ---
-- name: Nagios Debug
+- name: "Nagios Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
   vars:
     msg: |-
       bsd_nagios_role_version: {{ bsd_nagios_role_version }}

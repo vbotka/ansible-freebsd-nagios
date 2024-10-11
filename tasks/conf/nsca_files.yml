@@ -1,15 +1,15 @@
 ---
-- name: "Conf:nsca_files: Debug"
+- name: "Conf:nsca_files: Debug bsd_nagios_debug={{ bsd_nagios_debug }}"
+  when: bsd_nagios_debug | bool
   ansible.builtin.debug:
     var: bsd_nsca_conf_files
-  when: bsd_nagios_debug | bool
 
 - name: "Conf:nsca_files: Remove config files"
+  when: bsd_nsca_conf_recreate | bool
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ bsd_nsca_conf_files }}"
-  when: bsd_nsca_conf_recreate | bool
 
 - name: "Conf:nsca_files: Create config files from samples"
   ansible.builtin.include_tasks: conf/create_file.yml
